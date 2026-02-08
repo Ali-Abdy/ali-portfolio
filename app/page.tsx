@@ -2,6 +2,8 @@
 
 import TopBar from "@/components/TopBar";
 import { useI18n } from "@/app/i18n";
+import ProjectCard from "@/components/ProjectCard";
+
 
 const copy = {
   en: {
@@ -56,27 +58,18 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="projects" className="mx-auto max-w-5xl px-6 pb-28">
-        <h2 className="text-2xl font-semibold">{t.projectsTitle}</h2>
+<section id="projects" className="mt-32 max-w-5xl mx-auto px-6">
+  <h2 className="text-3xl font-semibold">Projects</h2>
 
-        <div className="mt-8 grid gap-6 md:grid-cols-2">
-          <div className="rounded-2xl border border-black/10 bg-white/60 p-6
-                          dark:border-white/10 dark:bg-white/5">
-            <h3 className="text-lg font-medium">Portfolio Website</h3>
-            <p className="mt-2 text-black/70 dark:text-white/70">
-              Next.js + Tailwind, clean Apple-like layout.
-            </p>
-          </div>
-
-          <div className="rounded-2xl border border-black/10 bg-white/60 p-6
-                          dark:border-white/10 dark:bg-white/5">
-            <h3 className="text-lg font-medium">Weather App</h3>
-            <p className="mt-2 text-black/70 dark:text-white/70">
-              Simple UI, API integration, responsive design.
-            </p>
-          </div>
-        </div>
-      </section>
+  <div className="mt-8 grid gap-6 sm:grid-cols-2">
+    <ProjectCard
+      title="Skycast"
+      description="A weather app that fetches real-time data using the OpenWeatherMap API with a clean, responsive UI."
+      tech={["JavaScript", "HTML", "CSS", "API"]}
+      github="https://github.com/Ali-Abdy/Skycast"
+    />
+  </div>
+</section>
     </main>
   );
 }
