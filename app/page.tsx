@@ -1,75 +1,70 @@
 "use client";
 
 import TopBar from "@/components/TopBar";
-import { useI18n } from "@/app/i18n";
 import ProjectCard from "@/components/ProjectCard";
-
-
-const copy = {
-  en: {
-    hi: "Hi, I'm",
-    role: "Junior Developer",
-    ctaProjects: "View Projects",
-    ctaResume: "Resume",
-    projectsTitle: "Projects",
-  },
-  de: {
-    hi: "Hi, ich bin",
-    role: "Junior Entwickler",
-    ctaProjects: "Projekte ansehen",
-    ctaResume: "Lebenslauf",
-    projectsTitle: "Projekte",
-  },
-} as const;
+import { useI18n } from "@/app/i18n";
+import { projects } from "@/app/projects.data";
 
 export default function Home() {
   const { lang } = useI18n();
-  const t = copy[lang];
 
   return (
     <main className="min-h-screen bg-white text-black dark:bg-black dark:text-white">
       <TopBar />
 
+      {/* HERO SECTION */}
       <section className="mx-auto max-w-5xl px-6 pt-32 pb-24">
-        <p className="text-sm text-black/60 dark:text-white/60">{t.hi}</p>
+  <p className="text-sm md:text-base text-gray-500 dark:text-gray-400">
+    {lang === "de" ? "Hallo, ich bin" : "Hi, I’m"}
+  </p>
 
-        <h1 className="mt-2 text-5xl md:text-6xl font-semibold tracking-tight">
-          Ali Abdi
-        </h1>
+  <h2 className="mt-3 text-5xl md:text-6xl font-bold tracking-tight">
+    Ali Abdi
+  </h2>
 
-        <p className="mt-4 text-xl text-black/70 dark:text-white/70">
-          {t.role}
-        </p>
+  <p className="mt-6 text-xl text-gray-600 dark:text-gray-400">
+    {lang === "de" ? "Junior Entwickler" : "Junior Developer"}
+  </p>
 
-        <div className="mt-8 flex gap-4">
+        <div className="mt-10 flex gap-4">
           <a
             href="#projects"
-            className="rounded-full bg-blue-600 text-white px-6 py-3 text-sm font-medium hover:bg-blue-700 transition"
+            className="rounded-full bg-blue-600 px-6 py-3 text-sm font-medium text-white hover:bg-blue-700 transition"
           >
-            {t.ctaProjects}
+            {lang === "de" ? "Projekte ansehen" : "View Projects"}
           </a>
+
           <a
-            href="/resume"
-            className="rounded-full border border-black/10 bg-white/60 px-6 py-3 text-sm font-medium hover:bg-white transition
-                       dark:border-white/10 dark:bg-white/5 dark:hover:bg-white/10"
+            href="#"
+            className="rounded-full border border-gray-300 dark:border-gray-700 px-6 py-3 text-sm font-medium hover:bg-gray-100 dark:hover:bg-gray-900 transition"
           >
-            {t.ctaResume}
+            {lang === "de" ? "Lebenslauf" : "Resume"}
           </a>
         </div>
       </section>
 
-<section id="projects" className="mt-32 max-w-5xl mx-auto px-6">
-  <h2 className="text-3xl font-semibold">Projects</h2>
+      {/* PROJECTS SECTION */}
+      <section
+        id="projects"
+        className="mx-auto max-w-5xl px-6 pb-28"
+      >
+        <h3 className="text-3xl font-semibold">
+          {lang === "de" ? "Projekte" : "Projects"}
+        </h3>
 
-  <div className="mt-8 grid gap-6 sm:grid-cols-2">
-    <ProjectCard
-      title="Skycast"
-      description="A weather app that fetches real-time data using the OpenWeatherMap API with a clean, responsive UI."
-      tech={["JavaScript", "HTML", "CSS", "API"]}
-      github="https://github.com/Ali-Abdy/Skycast"
-    />
-  </div>
-</section>
+        <div className="mt-8 grid gap-6 sm:grid-cols-2">
+          {projects.map((p) => (
+            <ProjectCard
+              key={p.slug}
+              title={p.title[lang]}
+              description={p.description[lang]}
+              tech={p.tech}
+              github={p.github}
+              live={p.live}
+            />
+          ))}
+        </div>
+      </section>
     </main>
   );
 }
