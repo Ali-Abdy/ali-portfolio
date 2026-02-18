@@ -19,4 +19,14 @@ export const projects: Project[] = [
     tech: ["JavaScript", "HTML", "CSS", "API"],
     github: "https://github.com/Ali-Abdy/Skycast",
   },
+  {
+  slug: "codex",
+  title: { en: "Codex", de: "Codex" },
+  description: {
+    en: "A weather app that works accurately.",
+    de: "Eine Wetter-App, die zuverlässig und genau funktioniert.",
+  },
+  tech: ["JavaScript", "HTML", "CSS", "API"],
+  github: "https://github.com/Ali-Abdy/Codex",
+},
 ];

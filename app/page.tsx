@@ -12,36 +12,22 @@ export default function Home() {
     <main className="min-h-screen bg-white text-black dark:bg-black dark:text-white">
       <TopBar />
 
-      {/* HERO SECTION */}
-      <section className="mx-auto max-w-5xl px-6 pt-32 pb-24">
+{/* HERO SECTION */}
+<section className="mx-auto max-w-5xl px-6 pt-32 pb-24">
   <p className="text-sm md:text-base text-gray-500 dark:text-gray-400">
     {lang === "de" ? "Hallo, ich bin" : "Hi, I’m"}
   </p>
 
-  <h2 className="mt-3 text-5xl md:text-6xl font-bold tracking-tight">
+  <h1 className="mt-2 text-5xl md:text-7xl font-semibold tracking-tight">
     Ali Abdi
-  </h2>
+  </h1>
 
-  <p className="mt-6 text-xl text-gray-600 dark:text-gray-400">
-    {lang === "de" ? "Junior Entwickler" : "Junior Developer"}
+  <p className="mt-6 text-lg md:text-xl text-gray-600 dark:text-gray-400">
+    {lang === "de"
+      ? "Junior Entwickler mit Fokus auf moderne Webanwendungen."
+      : "Junior Developer focused on modern web applications."}
   </p>
-
-        <div className="mt-10 flex gap-4">
-          <a
-            href="#projects"
-            className="rounded-full bg-blue-600 px-6 py-3 text-sm font-medium text-white hover:bg-blue-700 transition"
-          >
-            {lang === "de" ? "Projekte ansehen" : "View Projects"}
-          </a>
-
-          <a
-            href="#"
-            className="rounded-full border border-gray-300 dark:border-gray-700 px-6 py-3 text-sm font-medium hover:bg-gray-100 dark:hover:bg-gray-900 transition"
-          >
-            {lang === "de" ? "Lebenslauf" : "Resume"}
-          </a>
-        </div>
-      </section>
+</section>
 
       {/* PROJECTS SECTION */}
       <section
