@@ -26,7 +26,7 @@ export default function TopBar() {
             <button
               onClick={toggleLang}
               className="rounded-full px-3 py-2 text-xs font-medium border border-black/10 bg-white/60 hover:bg-white
-                         dark:border-white/10 dark:bg-white/5 dark:hover:bg-white/10 text-black dark:text-white"
+                        dark:border-white/10 dark:bg-white/5 dark:hover:bg-white/10 text-black dark:text-white"
               aria-label="Toggle language"
             >
               {lang === "en" ? "EN" : "DE"}
@@ -36,7 +36,7 @@ export default function TopBar() {
             <button
               onClick={() => setTheme(isDark ? "light" : "dark")}
               className="rounded-full px-3 py-2 text-xs font-medium border border-black/10 bg-white/60 hover:bg-white
-                         dark:border-white/10 dark:bg-white/5 dark:hover:bg-white/10 text-black dark:text-white"
+                        dark:border-white/10 dark:bg-white/5 dark:hover:bg-white/10 text-black dark:text-white"
               aria-label="Toggle theme"
             >
               {isDark ? "Dark" : "Light"}
