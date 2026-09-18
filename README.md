@@ -1,36 +1,57 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Ali Abdi — Portfolio
 
-## Getting Started
+A German-first personal portfolio for internships and vocational training as a **Fachinformatiker für Anwendungsentwicklung**. It presents my projects, current learning journey, technical skills, and contact details without implying professional experience.
 
-First, run the development server:
+## Stack
 
-```bash
+Next.js 16 App Router, React 19, strict TypeScript, Tailwind CSS 3, custom CSS, and next-themes. Content is rendered on the server; only navigation and theme controls need client JavaScript. No database, analytics, contact backend, or API credentials are required.
+
+## Development
+
+Use Node.js 22 or newer and npm:
+
+```sh
+npm ci
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open `http://localhost:3000`. `/` redirects to `/de`; `/en` provides the English version. The URL determines the language on the server, including `<html lang>` and metadata. Theme preference is stored by next-themes.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Checks and production
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```sh
+npm run lint
+npm run typecheck
+npm run build
+npm start
+```
 
-## Learn More
+The build downloads Geist through next/font; visitors receive self-hosted fonts. For browser tests, build first, then run:
 
-To learn more about Next.js, take a look at the following resources:
+```sh
+npx playwright install chromium
+npm run test:e2e
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The suite starts the production server on port 3107 and checks both languages, eight viewport widths, navigation, themes, accessibility, links, and metadata assets.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Structure
 
-## Deploy on Vercel
+- `app/[lang]/` — statically generated localized pages, root layout
+- `app/social/[lang]/` — localized social preview images
+- `components/` — semantic portfolio sections and navigation
+- `content/site.ts` — typed German/English copy and personal contact links
+- `content/projects.ts` — project data, status, features, and learning notes
+- `lib/site-url.ts` — optional production origin
+- `public/` — portrait, project visual, and personal icons
+- `tests/` — browser and accessibility checks
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Updating content
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Set `profile.cv` in `content/site.ts` only after adding the real PDF under `public/cv/`. Until then, the CV control is disabled and there is no download link. The original `public/profile.png` is retained as a source; the page delivers the optimized WebP.
+
+Luxury Barbershop is explicitly in development. Its image is an existing project visual, not a screenshot. Skycast is an early API learning project, not presented as a production-ready service. Codex was omitted because its unfinished weather features overlap with Skycast. No live demo URL has been invented. The separate project repositories were not modified.
+
+## Public deployment
+
+Deploy as a standard Next.js application. Once the real production origin is known, set `SITE_URL` to that full origin in the hosting environment and rebuild. This enables absolute canonical URLs, language alternates, social-image URLs, and sitemap entries. Without it, no guessed canonical/domain is emitted and the sitemap remains empty. Review the final CV, copy, and project links before sharing the public URL in applications.

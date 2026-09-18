@@ -1,91 +1,91 @@
-"use client";
-
 import Image from "next/image";
-import { useI18n } from "@/app/i18n";
+import type { Content } from "@/content/site";
+import { profile } from "@/content/site";
+import { Icon } from "./Icons";
+import ExternalLink from "./ExternalLink";
 
-export default function Hero() {
-const { lang } = useI18n();
-
-return (
-    <section className="mx-auto max-w-5xl px-6 pt-32 pb-24">
-<div className="flex items-center justify-between gap-x-6 md:gap-10">
-    {/* Left: Text */}
-    <div className="flex flex-col gap-y-2">
-    <p className="text-[clamp(12px,2.4vw,16px)] text-gray-500 dark:text-gray-400">
-        {lang === "de" ? "Hallo, ich bin" : "Hi, I’m"}
+export default function Hero({ text }: { text: Content["hero"] }) {
+  return (
+    <section
+      id="home"
+      className="hero section-shell"
+      aria-labelledby="hero-title"
+    >
+      <div className="hero-copy">
+        <p className="eyebrow">
+          <span className="small-line" />
+          {text.eyebrow}
         </p>
-
-
-    <h1 className="font-semibold leading-[1.05] tracking-tight
-        text-[clamp(2.5rem,6vw,4.5rem)]">
-Ali Abdi
-    </h1>
-
-
-    <p className="max-w-xl text-neutral-600 dark:text-neutral-300
-        text-[clamp(1rem,1.2vw,1.125rem)]">
-        {lang === "de"
-        ? "Junior Entwickler mit Fokus auf moderne Webanwendungen."
-        : "Junior Developer focused on modern web applications."}
-    </p>
-
-    <div className="mt-6 flex flex-wrap gap-x-4">
-        <a
-  href="#projects"
-  className="
-    inline-flex items-center justify-center
-    px-6 py-3
-    rounded-xl
-    font-medium
-    transition-all duration-200
-    bg-black text-white
-    dark:bg-white dark:text-black
-    hover:opacity-90
-    active:scale-[0.98]
-  "
->
-  {lang === "de" ? "Projekte" : "Projects"}
-</a>
-            
-
-        <a
-        href="https://www.linkedin.com/in/ali-abdi-749222356/"
-        target="_blank"
-        rel="noreferrer noopener"
-        className="
-    inline-flex items-center justify-center
-    px-6 py-3
-    rounded-xl
-    font-medium
-    transition-all duration-200
-    bg-black text-white
-    dark:bg-white dark:text-black
-    hover:opacity-90
-    active:scale-[0.98]
-  "
-        >
-        LinkedIn
-        </a>
-    </div>
-    </div>
-
-    {/* Right: Image (always visible, always horizontal) */}
-    <div className="flex-none w-[clamp(120px,32vw,280px)]">
-    <div className="relative aspect-square overflow-hidden rounded-2xl bg-black/5 dark:bg-white/5">
-        <Image
-        src="/profile.png"
-        alt="Ali Abdi"
-        fill
-        priority
-        className="object-cover"
-        sizes="(max-width: 768px) 32vw, 280px"
-        />
-    </div>
-    </div>
-</div>
-</section>
-);
+        <p className="hero-greeting">{text.greeting}</p>
+        <h1 id="hero-title">{text.title}</h1>
+        <p className="hero-description">{text.description}</p>
+        <div className="hero-actions">
+          <a className="button button-primary" href="#projects">
+            {text.projects}
+            <Icon name="arrow" />
+          </a>
+          <a className="button button-secondary" href="#contact">
+            {text.contact}
+          </a>
+        </div>
+        <div className="hero-links">
+          <ExternalLink href={profile.github} aria-label="Ali Abdi – GitHub">
+            <Icon name="github" />
+            GitHub
+          </ExternalLink>
+          <ExternalLink
+            href={profile.linkedin}
+            aria-label="Ali Abdi – LinkedIn"
+          >
+            LinkedIn
+            <Icon name="external" width="15" height="15" />
+          </ExternalLink>
+          {profile.cv ? (
+            <a href={profile.cv} download className="cv-link">
+              <Icon name="download" />
+              {text.cv}
+            </a>
+          ) : (
+            <span className="cv-pending">
+              <button disabled aria-describedby="cv-status">
+                <Icon name="download" />
+                {text.cv}
+              </button>
+              <span id="cv-status">{text.cvPending}</span>
+            </span>
+          )}
+        </div>
+      </div>
+      <figure className="hero-portrait">
+        <div className="portrait-frame">
+          <Image
+            src="/profile.webp"
+            alt={text.portraitAlt}
+            width={800}
+            height={800}
+            preload
+            sizes="(max-width: 767px) 85vw, (max-width: 1100px) 38vw, 420px"
+            className="portrait-image"
+          />
+          <div className="portrait-caption">
+            <span className="status-dot" />
+            {text.availability}
+          </div>
+        </div>
+        <figcaption>
+          <span>
+            <Icon name="pin" width="16" height="16" />
+            {text.location}
+          </span>
+          <span className="portrait-coordinate" aria-hidden="true">
+            DE / SL
+          </span>
+        </figcaption>
+      </figure>
+      <div className="hero-baseline">
+        <span>Ali Abdi / Portfolio</span>
+        <span>{text.caption}</span>
+      </div>
+    </section>
+  );
 }
-
-
-
