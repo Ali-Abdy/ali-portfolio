@@ -7,8 +7,6 @@ type ProjectText = {
   features: string[];
   learning: string;
   note: string;
-  imageAlt: string;
-  imageCaption: string;
 };
 export type Project = {
   slug: string;
@@ -16,8 +14,6 @@ export type Project = {
   stack: string[];
   github: string;
   live?: string;
-  image?: string;
-  featured?: boolean;
   text: Record<Locale, ProjectText>;
 };
 
@@ -25,8 +21,6 @@ export const projects: Project[] = [
   {
     slug: "luxury-barbershop",
     title: "Luxury Barbershop",
-    featured: true,
-    image: "/projects/luxury-barbershop.webp",
     stack: [
       "Next.js",
       "React",
@@ -38,9 +32,9 @@ export const projects: Project[] = [
     github: "https://github.com/Ali-Abdy/Luxury-Barbershop",
     text: {
       de: {
-        category: "Webanwendung · mein größtes Lernprojekt",
+        category: "Webanwendung mit Datenbank",
         summary:
-          "Eine mehrsprachige Barbershop-Anwendung, an der ich das Zusammenspiel von Oberfläche, Anmeldung und Datenbank übe.",
+          "Eine mehrsprachige Anwendung für einen Barbershop. Mein bisher größtes Lernprojekt verbindet Oberfläche, Anmeldung und Datenmodelle für die Terminverwaltung.",
         status: "In Entwicklung",
         features: [
           "Deutsche und englische Oberfläche",
@@ -48,16 +42,13 @@ export const projects: Project[] = [
           "Datenmodelle für Leistungen, Verfügbarkeiten und Termine",
         ],
         learning:
-          "Wie ich eine größere Anwendung in Komponenten aufteile und Benutzerrollen, Datenmodelle und serverseitige Abläufe miteinander verbinde.",
-        note: "Die Terminbuchung ist noch nicht vollständig: Datumsauswahl und Zeitfenster-Logik werden weiterentwickelt.",
-        imageAlt:
-          "Dunkler Barbershop-Innenraum aus dem Bildmaterial des Luxury-Barbershop-Projekts",
-        imageCaption: "Bildmaterial aus dem Projekt · kein Screenshot",
+          "Das Zusammenspiel von React-Komponenten, Benutzerrollen und einer relationalen Datenbank. Mit Prisma beschreibe ich die Datenmodelle; Next.js verbindet die Oberfläche mit serverseitigen Abläufen.",
+        note: "Die Buchung ist noch nicht durchgängig nutzbar. Datumsauswahl und Zeitfenster-Logik werden weiterentwickelt. Das Projekt ist noch nicht öffentlich bereitgestellt.",
       },
       en: {
-        category: "Web application · my largest learning project",
+        category: "Web application with a database",
         summary:
-          "A bilingual barbershop application where I’m learning to connect an interface, authentication, and a database.",
+          "A bilingual application for a barbershop. My largest learning project so far connects an interface, authentication, and data models for appointment management.",
         status: "In development",
         features: [
           "German and English interfaces",
@@ -65,11 +56,8 @@ export const projects: Project[] = [
           "Data models for services, availability, and appointments",
         ],
         learning:
-          "Breaking a larger application into components and connecting user roles, data models, and server-side flows.",
-        note: "Booking is not complete yet: date selection and time-slot logic are still being developed.",
-        imageAlt:
-          "Dark barbershop interior from the Luxury Barbershop project’s visual assets",
-        imageCaption: "Project visual asset · not a screenshot",
+          "Connecting React components, user roles, and a relational database. I use Prisma to describe the data models and Next.js to connect the interface with server-side operations.",
+        note: "Booking is not usable end to end yet. Date selection and time-slot logic are still being developed. The project is not publicly deployed.",
       },
     },
   },
@@ -80,36 +68,32 @@ export const projects: Project[] = [
     github: "https://github.com/Ali-Abdy/Skycast",
     text: {
       de: {
-        category: "Wetter-App · Grundlagen & APIs",
+        category: "Wetter-App mit REST-API",
         summary:
-          "Ein frühes Lernprojekt: eine Stadtsuche, die Wetterdaten von OpenWeatherMap abruft und direkt in der Oberfläche anzeigt.",
-        status: "Lernprojekt",
+          "Eine Stadtsuche, die aktuelle Wetterdaten von OpenWeatherMap abruft. Ein frühes Projekt, mit dem ich asynchrone Anfragen und das Aktualisieren einer Oberfläche geübt habe.",
+        status: "Lernprototyp",
         features: [
           "Stadtsuche mit asynchroner API-Anfrage",
-          "Temperatur, Luftfeuchtigkeit und Wetter-Icons",
+          "Anzeige von Temperatur, Luftfeuchtigkeit und Wetter-Icons",
           "Rückmeldung bei einem nicht gefundenen Ort",
         ],
         learning:
-          "API-Antworten als JSON lesen, mit async/await arbeiten und Inhalte im DOM aktualisieren.",
-        note: "Ein früher Prototyp. Fehlerbehandlung und die Anzeige der Windeinheit brauchen noch Überarbeitung; deshalb ist kein Live-Demo verlinkt.",
-        imageAlt: "",
-        imageCaption: "",
+          "Mit async/await auf eine API-Antwort warten, JSON-Daten auslesen und die passenden DOM-Elemente aktualisieren. Die Oberfläche ist mit HTML, CSS und JavaScript umgesetzt, ohne UI-Framework.",
+        note: "Fehlerbehandlung und Windeinheit müssen überarbeitet werden. Der Quellcode dokumentiert den Lernstand; eine Live-Demo ist nicht veröffentlicht.",
       },
       en: {
-        category: "Weather app · fundamentals & APIs",
+        category: "Weather app using a REST API",
         summary:
-          "An early learning project: a city search that requests weather data from OpenWeatherMap and displays it in the interface.",
-        status: "Learning project",
+          "A city search that fetches current weather from OpenWeatherMap. An early project for practising asynchronous requests and updating an interface with the response.",
+        status: "Learning prototype",
         features: [
           "City search with asynchronous API requests",
           "Temperature, humidity, and weather icons",
           "Feedback when a city cannot be found",
         ],
         learning:
-          "Reading JSON API responses, working with async/await, and updating content in the DOM.",
-        note: "An early prototype. Error handling and the wind-unit display still need work, so there is no live demo linked.",
-        imageAlt: "",
-        imageCaption: "",
+          "Using async/await to wait for an API response, reading JSON data, and updating the relevant DOM elements. The interface uses HTML, CSS, and JavaScript without a UI framework.",
+        note: "Error handling and the wind-unit display need revision. The source code documents this stage of learning; there is no published live demo.",
       },
     },
   },

@@ -56,7 +56,7 @@ export async function GET(
           fontSize: 23,
         }}
       >
-        {text.career.tags.join(" · ")}
+        {text.hero.availability}
       </div>
     </div>,
     size,

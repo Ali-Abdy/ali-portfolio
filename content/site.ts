@@ -8,20 +8,20 @@ export const profile = {
   name: "Ali Abdi",
   email: "aliabdihaj@gmail.com",
   github: "https://github.com/Ali-Abdy",
+  repository: "https://github.com/Ali-Abdy/ali-portfolio",
   linkedin: "https://www.linkedin.com/in/ali-abdi-749222356/",
-  // Add a real file under public/ and set this path, e.g. /cv/ali-abdi.pdf.
+  // Add the actual PDF under public/cv/ before setting this path.
   cv: null as string | null,
 };
 
-export type SectionId = "about" | "skills" | "projects" | "journey" | "contact";
+export type SectionId = "projects" | "skills" | "about" | "contact";
 type SectionIntro = { label: string; title: string; intro: string };
 export type Content = {
   metadata: { title: string; description: string };
   nav: { id: SectionId; label: string }[];
   controls: {
     navigation: string;
-    openMenu: string;
-    closeMenu: string;
+    menu: string;
     light: string;
     dark: string;
     language: string;
@@ -30,67 +30,78 @@ export type Content = {
   };
   hero: {
     eyebrow: string;
-    greeting: string;
     title: string;
     description: string;
     projects: string;
     contact: string;
     cv: string;
-    cvPending: string;
+    cvRequest: string;
+    cvSubject: string;
     availability: string;
     location: string;
     portraitAlt: string;
-    caption: string;
-  };
-  about: SectionIntro & {
-    paragraphs: string[];
-    note: string;
-    languagesTitle: string;
-    languages: { name: string; level: string }[];
-  };
-  skills: SectionIntro & {
-    groups: { title: string; description: string; items: string[] }[];
+    facts: { label: string; value: string }[];
   };
   projects: SectionIntro & {
-    featured: string;
     source: string;
     demo: string;
     learning: string;
     more: string;
     features: string;
+    details: string;
+    next: string;
+    stack: string;
+    permalink: string;
   };
-  journey: SectionIntro & {
-    items: { label: string; title: string; description: string }[];
+  skills: SectionIntro & {
+    groups: {
+      title: string;
+      description: string;
+      items: string[];
+      evidence: { label: string; href: string };
+    }[];
   };
-  career: { label: string; title: string; description: string; tags: string[] };
+  about: SectionIntro & {
+    paragraphs: string[];
+    languagesTitle: string;
+    languages: { name: string; level: string }[];
+    currentTitle: string;
+    current: { title: string; description: string }[];
+  };
   contact: {
     label: string;
     title: string;
     description: string;
     email: string;
+    subject: string;
+    copy: string;
+    copied: string;
+    copySuccess: string;
+    copyFailure: string;
     location: string;
+    profiles: string;
+    print: string;
+    printHint: string;
   };
-  footer: { note: string; top: string };
+  footer: { note: string; top: string; source: string };
 };
 
 export const content: Record<Locale, Content> = {
   de: {
     metadata: {
-      title: "Ali Abdi · Angehender Anwendungsentwickler im Saarland",
+      title: "Ali Abdi · Webentwicklung · Praktikum & Ausbildung im Saarland",
       description:
-        "Ich bin Ali Abdi aus dem Saarland. Hier zeige ich meine Webprojekte und meinen Weg zum Fachinformatiker für Anwendungsentwicklung. Offen für Praktikum und Ausbildung.",
+        "Webprojekte, Kenntnisse und Kontakt von Ali Abdi aus dem Saarland. Auf der Suche nach einem Praktikum oder einer Ausbildung zum Fachinformatiker für Anwendungsentwicklung.",
     },
     nav: [
-      { id: "about", label: "Über mich" },
-      { id: "skills", label: "Kenntnisse" },
       { id: "projects", label: "Projekte" },
-      { id: "journey", label: "Mein Weg" },
+      { id: "skills", label: "Kenntnisse" },
+      { id: "about", label: "Über mich" },
       { id: "contact", label: "Kontakt" },
     ],
     controls: {
       navigation: "Hauptnavigation",
-      openMenu: "Menü öffnen",
-      closeMenu: "Menü schließen",
+      menu: "Menü",
       light: "Helles Design aktivieren",
       dark: "Dunkles Design aktivieren",
       language: "Sprache",
@@ -98,48 +109,52 @@ export const content: Record<Locale, Content> = {
       home: "Ali Abdi – Startseite",
     },
     hero: {
-      eyebrow: "Angehender Anwendungsentwickler",
-      greeting: "Hallo, ich bin Ali.",
-      title: "Ich lerne, indem\nich entwickle.",
+      eyebrow: "Portfolio · Anwendungsentwicklung",
+      title: "Webentwicklung mit JavaScript, React & Next.js.",
       description:
-        "Ich baue Webanwendungen und vertiefe dabei meine Programmierkenntnisse. Mein Ziel: eine Ausbildung zum Fachinformatiker für Anwendungsentwicklung.",
+        "Ich entwickle eigene Webprojekte und suche ein Praktikum oder eine Ausbildung zum Fachinformatiker für Anwendungsentwicklung. Hier sehen Sie, woran ich arbeite und was ich bisher gelernt habe.",
       projects: "Projekte ansehen",
       contact: "Kontakt aufnehmen",
-      cv: "Lebenslauf",
-      cvPending: "Bald verfügbar",
+      cv: "Lebenslauf herunterladen",
+      cvRequest: "Lebenslauf anfragen",
+      cvSubject: "Anfrage: Lebenslauf von Ali Abdi",
       availability: "Offen für Praktikum & Ausbildung",
       location: "Saarland, Deutschland",
-      portraitAlt: "Porträt von Ali Abdi",
-      caption: "Neugierig bleiben. Schritt für Schritt weiterkommen.",
+      portraitAlt: "Ali Abdi",
+      facts: [
+        { label: "Standort", value: "Saarland, Deutschland" },
+        { label: "Gesucht", value: "Praktikum oder Ausbildung" },
+        {
+          label: "Berufsziel",
+          value: "Fachinformatiker für Anwendungsentwicklung",
+        },
+      ],
     },
-    about: {
-      label: "01 / Über mich",
-      title: "Vom Ausprobieren\nzum Verstehen.",
+    projects: {
+      label: "01 / Projekte",
+      title: "Zwei Projekte. Zwei Schwerpunkte.",
       intro:
-        "Am meisten lerne ich, wenn aus einer Idee etwas wird, das ich selbst benutzen kann.",
-      paragraphs: [
-        "Ich bin Ali und lebe im Saarland. Mein Schwerpunkt ist die Web- und Anwendungsentwicklung: Oberflächen gestalten, Daten verarbeiten und verstehen, wie die Teile einer Anwendung zusammenarbeiten.",
-        "Ich stehe am Anfang meines Weges. Mit jedem Projekt übe ich, Probleme in kleinere Schritte zu zerlegen, Fehler zu finden und meinen Code verständlicher zu machen.",
-      ],
-      note: "Mein Ziel ist, diese Grundlagen in einer Ausbildung zu vertiefen und im Team an echten Aufgaben zu wachsen.",
-      languagesTitle: "Sprachen",
-      languages: [
-        { name: "Somali", level: "Muttersprache" },
-        { name: "Englisch", level: "Fließend" },
-        { name: "Deutsch", level: "B2 · aktuell im Kurs" },
-        { name: "Kiswahili", level: "" },
-      ],
+        "Von einer API-Anfrage bis zur Anwendung mit Datenbank. Quellcode, Umsetzung und aktueller Stand sind direkt nachvollziehbar.",
+      source: "Quellcode auf GitHub",
+      demo: "Live-Demo öffnen",
+      learning: "Technischer Schwerpunkt",
+      more: "GitHub-Profil ansehen",
+      features: "Bisher umgesetzt",
+      details: "Einblick in die Umsetzung",
+      next: "Noch offen",
+      stack: "Technologien",
+      permalink: "Direktlink zum Projekt",
     },
     skills: {
       label: "02 / Kenntnisse",
-      title: "Mein Werkzeugkasten.",
+      title: "Was ich praktisch einsetze.",
       intro:
-        "Technologien, mit denen ich in meinen Projekten arbeite und weiterlerne.",
+        "Meine Kenntnisse stammen aus eigenen Lernprojekten. Die verlinkten Beispiele zeigen, wo ich sie anwende.",
       groups: [
         {
-          title: "Oberflächen",
+          title: "Oberflächen entwickeln",
           description:
-            "Von einer HTML-Seite bis zu Komponenten und responsiven Layouts.",
+            "Seiten strukturieren, responsive Layouts umsetzen und Oberflächen in React-Komponenten aufteilen.",
           items: [
             "HTML",
             "CSS",
@@ -149,96 +164,95 @@ export const content: Record<Locale, Content> = {
             "Next.js",
             "Tailwind CSS",
           ],
+          evidence: {
+            label: "Beispiel: Luxury Barbershop",
+            href: "#luxury-barbershop",
+          },
         },
         {
-          title: "Daten & Anwendungslogik",
+          title: "Mit Daten arbeiten",
           description:
-            "API-Anfragen, Datenmodelle und serverseitige Abläufe im Barbershop-Projekt.",
-          items: ["Node.js", "Prisma", "PostgreSQL", "REST-APIs"],
+            "API-Antworten verarbeiten und Datenmodelle für Leistungen und Termine im Barbershop-Projekt aufbauen.",
+          items: ["REST-APIs", "Node.js", "Prisma", "PostgreSQL"],
+          evidence: { label: "Beispiel: Skycast", href: "#skycast" },
         },
         {
-          title: "Entwicklungsalltag",
+          title: "Code weiterentwickeln",
           description:
-            "Änderungen nachvollziehen, Code organisieren und Projekte Schritt für Schritt verbessern.",
+            "Änderungen mit Git nachvollziehen, Fehler untersuchen und Projekte in überschaubaren Schritten bearbeiten.",
           items: ["Git", "GitHub", "VS Code", "npm"],
+          evidence: { label: "Meine Repositories", href: profile.github },
         },
       ],
     },
-    projects: {
-      label: "03 / Ausgewählte Projekte",
-      title: "Gelernt. Gebaut.\nWeiterentwickelt.",
-      intro:
-        "Zwei Projekte aus meinem Lernprozess – mit unterschiedlichen Schwerpunkten und einem ehrlichen Blick auf den aktuellen Stand.",
-      featured: "Im Fokus",
-      source: "Code ansehen",
-      demo: "Live ansehen",
-      learning: "Was ich dabei lerne",
-      more: "Weitere Arbeiten auf GitHub",
-      features: "Einblicke",
-    },
-    journey: {
-      label: "04 / Mein Weg",
-      title: "Der nächste Schritt\nbaut auf dem letzten auf.",
-      intro:
-        "Ich bereite mich fachlich und sprachlich auf meinen Einstieg in die Anwendungsentwicklung vor.",
-      items: [
+    about: {
+      label: "03 / Über mich",
+      title: "Mein Weg in die Anwendungsentwicklung.",
+      intro: "Ich bin Ali und lebe im Saarland.",
+      paragraphs: [
+        "Mich interessiert, wie aus einer Oberfläche eine funktionierende Anwendung wird: Wie kommen Daten auf die Seite? Wie greifen Anmeldung, Benutzerrollen und Datenbank ineinander? An diesen Fragen arbeite ich in meinen Projekten.",
+        "Ich stehe am Anfang meiner beruflichen Entwicklung. In einem Praktikum oder einer Ausbildung möchte ich meine Grundlagen vertiefen und lernen, wie ein Entwicklungsteam Software plant, prüft und betreut.",
+      ],
+      currentTitle: "Aktuell",
+      current: [
         {
-          label: "Praxis",
-          title: "Programmieren durch Projekte",
+          title: "Deutsch · B2-Kurs",
           description:
-            "Ich lerne Webentwicklung und wende neue Kenntnisse direkt an – von API-Anfragen bis zu einer Anwendung mit Datenbank.",
+            "Ich besuche einen B2-Kurs, um mich im Alltag und im beruflichen Umfeld sicherer auszudrücken.",
         },
         {
-          label: "Aktuell",
-          title: "Deutsch vertiefen · B2-Kurs",
-          description:
-            "Ich besuche einen B2-Deutschkurs, um mich im Alltag und im beruflichen Umfeld sicherer auszudrücken.",
-        },
-        {
-          label: "Orientierung",
           title: "Berufsvorbereitende Bildungsmaßnahme",
           description:
-            "Ich nehme an einer BvB teil und bereite meinen nächsten beruflichen Schritt vor. Mein Schwerpunkt bleibt die Softwareentwicklung.",
+            "Im Rahmen einer BvB bereite ich meinen beruflichen Einstieg vor. Mein Ziel ist die Anwendungsentwicklung.",
         },
       ],
-    },
-    career: {
-      label: "Mein berufliches Ziel",
-      title: "Fachinformatiker für\nAnwendungsentwicklung.",
-      description:
-        "Ich suche ein Praktikum oder einen Ausbildungsplatz, bei dem ich mitarbeiten, Fragen stellen und von einem Entwicklungsteam lernen kann.",
-      tags: ["Praktikum", "Ausbildung", "Softwareentwicklung"],
+      languagesTitle: "Sprachen",
+      languages: [
+        { name: "Somali", level: "Muttersprache" },
+        { name: "Englisch", level: "Fließend" },
+        { name: "Deutsch", level: "B2-Kurs, laufend" },
+        { name: "Kiswahili", level: "Weitere Sprache" },
+      ],
     },
     contact: {
-      label: "05 / Kontakt",
-      title: "Lernen wir uns kennen.",
+      label: "04 / Kontakt",
+      title: "Passt mein Profil zu Ihrem Team?",
       description:
-        "Sie bieten ein Praktikum oder eine Ausbildung in der Anwendungsentwicklung an? Ich freue mich über eine Nachricht und die Gelegenheit, mich vorzustellen.",
+        "Ich freue mich über eine Nachricht zu einem Praktikum oder einer Ausbildung. Meinen Lebenslauf sende ich Ihnen gerne per E-Mail.",
       email: "E-Mail schreiben",
+      subject: "Praktikum / Ausbildung – Kontakt über Ihr Portfolio",
+      copy: "Adresse kopieren",
+      copied: "Kopiert",
+      copySuccess: "E-Mail-Adresse kopiert.",
+      copyFailure:
+        "Kopieren ist hier nicht möglich. Bitte markieren und kopieren Sie die E-Mail-Adresse direkt.",
       location: "Saarland, Deutschland",
+      profiles: "Weitere Profile",
+      print: "Portfolio drucken",
+      printHint:
+        "Druckansicht mit Projektdetails und Kontakt. Auch als PDF speicherbar.",
     },
     footer: {
-      note: "Mit Next.js entwickelt. Mit jedem Projekt dazugelernt.",
-      top: "Nach oben",
+      note: "Ali Abdi · Anwendungsentwicklung",
+      top: "Zurück nach oben",
+      source: "Quellcode dieses Portfolios",
     },
   },
   en: {
     metadata: {
-      title: "Ali Abdi · Aspiring application developer in Saarland",
+      title: "Ali Abdi · Web development · Internships & vocational training",
       description:
-        "Web projects and the learning journey of Ali Abdi, an aspiring application developer based in Saarland, Germany. Open to internships and vocational training.",
+        "Projects, skills, and contact details for Ali Abdi in Saarland, Germany. Seeking an internship or vocational training in application development.",
     },
     nav: [
-      { id: "about", label: "About" },
-      { id: "skills", label: "Skills" },
       { id: "projects", label: "Projects" },
-      { id: "journey", label: "Journey" },
+      { id: "skills", label: "Skills" },
+      { id: "about", label: "About" },
       { id: "contact", label: "Contact" },
     ],
     controls: {
       navigation: "Main navigation",
-      openMenu: "Open menu",
-      closeMenu: "Close menu",
+      menu: "Menu",
       light: "Switch to light theme",
       dark: "Switch to dark theme",
       language: "Language",
@@ -246,47 +260,52 @@ export const content: Record<Locale, Content> = {
       home: "Ali Abdi – home",
     },
     hero: {
-      eyebrow: "Aspiring application developer",
-      greeting: "Hi, I’m Ali.",
-      title: "Learning by\nbuilding things.",
+      eyebrow: "Portfolio · Application development",
+      title: "Web development with JavaScript, React & Next.js.",
       description:
-        "I build web applications to grow my programming skills. My next step is vocational training as a Fachinformatiker für Anwendungsentwicklung.",
-      projects: "Explore my projects",
+        "I build my own web projects and am looking for an internship or vocational training as a Fachinformatiker für Anwendungsentwicklung. Here is what I’m working on and what I’ve learned so far.",
+      projects: "View projects",
       contact: "Get in touch",
       cv: "Download CV",
-      cvPending: "Coming soon",
+      cvRequest: "Request my CV",
+      cvSubject: "Request: Ali Abdi’s CV",
       availability: "Open to internships & vocational training",
       location: "Saarland, Germany",
-      portraitAlt: "Portrait of Ali Abdi",
-      caption: "Stay curious. Keep taking the next step.",
+      portraitAlt: "Ali Abdi",
+      facts: [
+        { label: "Based in", value: "Saarland, Germany" },
+        { label: "Looking for", value: "Internship or vocational training" },
+        {
+          label: "Career goal",
+          value: "Fachinformatiker für Anwendungsentwicklung",
+        },
+      ],
     },
-    about: {
-      label: "01 / About",
-      title: "From trying things\nto understanding them.",
-      intro: "Building something I can actually use is how I learn best.",
-      paragraphs: [
-        "I’m Ali, based in Saarland, Germany. I’m learning web and application development: designing interfaces, working with data, and figuring out how the pieces fit together.",
-        "I’m early in my development journey. Each project gives me another chance to break down a problem, track down a bug, and write code that is easier to follow.",
-      ],
-      note: "I want to build on these foundations through vocational training and learn from real work in a development team.",
-      languagesTitle: "Languages",
-      languages: [
-        { name: "Somali", level: "Native" },
-        { name: "English", level: "Fluent" },
-        { name: "German", level: "B2 · attending a course" },
-        { name: "Kiswahili", level: "" },
-      ],
+    projects: {
+      label: "01 / Projects",
+      title: "Two projects. Two different challenges.",
+      intro:
+        "From an API request to an application with a database. Explore the source code, implementation, and current state of each project.",
+      source: "Source code on GitHub",
+      demo: "Open live demo",
+      learning: "Technical focus",
+      more: "Visit my GitHub profile",
+      features: "Implemented so far",
+      details: "Explore the implementation",
+      next: "Still to do",
+      stack: "Technologies",
+      permalink: "Link to this project",
     },
     skills: {
       label: "02 / Skills",
-      title: "Tools I’m working with.",
+      title: "What I put into practice.",
       intro:
-        "Technologies I use in my projects and continue to learn along the way.",
+        "These are skills I’m developing through personal projects. The linked examples show where I use them.",
       groups: [
         {
-          title: "Interfaces",
+          title: "Building interfaces",
           description:
-            "From an HTML page to reusable components and responsive layouts.",
+            "Structuring pages, implementing responsive layouts, and breaking interfaces into React components.",
           items: [
             "HTML",
             "CSS",
@@ -296,77 +315,78 @@ export const content: Record<Locale, Content> = {
             "Next.js",
             "Tailwind CSS",
           ],
+          evidence: {
+            label: "Example: Luxury Barbershop",
+            href: "#luxury-barbershop",
+          },
         },
         {
-          title: "Data & application logic",
+          title: "Working with data",
           description:
-            "API requests, data models, and server-side flows in the barbershop project.",
-          items: ["Node.js", "Prisma", "PostgreSQL", "REST APIs"],
+            "Handling API responses and building data models for services and appointments in the barbershop project.",
+          items: ["REST APIs", "Node.js", "Prisma", "PostgreSQL"],
+          evidence: { label: "Example: Skycast", href: "#skycast" },
         },
         {
-          title: "Everyday tools",
+          title: "Improving code",
           description:
-            "Tracking changes, organizing code, and improving projects one step at a time.",
+            "Tracking changes with Git, investigating bugs, and working on projects in manageable steps.",
           items: ["Git", "GitHub", "VS Code", "npm"],
+          evidence: { label: "My repositories", href: profile.github },
         },
       ],
     },
-    projects: {
-      label: "03 / Selected projects",
-      title: "Learn it. Build it.\nKeep improving it.",
-      intro:
-        "Two projects from my learning journey, each with a different focus and a clear picture of where it stands.",
-      featured: "Featured project",
-      source: "View source",
-      demo: "Live demo",
-      learning: "What I’m learning",
-      more: "More work on GitHub",
-      features: "Inside the project",
-    },
-    journey: {
-      label: "04 / Journey",
-      title: "One step leads\nto the next.",
-      intro:
-        "I’m developing the technical and language skills I need to begin a career in application development.",
-      items: [
+    about: {
+      label: "03 / About",
+      title: "My path into application development.",
+      intro: "I’m Ali, based in Saarland, Germany.",
+      paragraphs: [
+        "I’m interested in how an interface becomes a working application: how does data reach the page? How do authentication, user roles, and a database fit together? These are the questions I work through in my projects.",
+        "I’m at the start of my career. Through an internship or vocational training, I want to strengthen my foundations and learn how a development team plans, tests, and maintains software.",
+      ],
+      currentTitle: "Currently",
+      current: [
         {
-          label: "Practice",
-          title: "Learning through projects",
+          title: "German · B2 course",
           description:
-            "I put new web development skills into practice, from making API requests to building an application with a database.",
+            "I’m attending a B2 course to communicate more confidently in everyday life and at work.",
         },
         {
-          label: "Currently",
-          title: "Developing my German · B2 course",
-          description:
-            "I’m attending a B2 German course to communicate more confidently in everyday life and in a workplace.",
-        },
-        {
-          label: "Preparation",
           title: "Vocational preparation programme",
           description:
-            "I’m taking part in a BvB programme as I prepare for my next career step, with software development as my focus.",
+            "I’m preparing for my career through a BvB programme, with application development as my goal.",
         },
       ],
-    },
-    career: {
-      label: "Where I’m heading",
-      title: "Fachinformatiker für\nAnwendungsentwicklung.",
-      description:
-        "I’m looking for an internship or vocational training opportunity where I can contribute, ask questions, and learn alongside a development team.",
-      tags: ["Internship", "Vocational training", "Software development"],
+      languagesTitle: "Languages",
+      languages: [
+        { name: "Somali", level: "Native" },
+        { name: "English", level: "Fluent" },
+        { name: "German", level: "B2 course in progress" },
+        { name: "Kiswahili", level: "Additional language" },
+      ],
     },
     contact: {
-      label: "05 / Contact",
-      title: "Let’s start a conversation.",
+      label: "04 / Contact",
+      title: "Could I be a fit for your team?",
       description:
-        "Does your team offer internships or vocational training in application development? I’d be glad to hear from you and introduce myself.",
-      email: "Send an email",
+        "I’d be glad to hear about an internship or vocational training opportunity. I’m happy to send my CV by email.",
+      email: "Write an email",
+      subject: "Internship / vocational training – portfolio enquiry",
+      copy: "Copy email address",
+      copied: "Copied",
+      copySuccess: "Email address copied.",
+      copyFailure:
+        "Copying isn’t available here. Please select and copy the email address directly.",
       location: "Saarland, Germany",
+      profiles: "Elsewhere",
+      print: "Print portfolio",
+      printHint:
+        "Print view with project details and contact information. You can also save it as a PDF.",
     },
     footer: {
-      note: "Built with Next.js. Learning with every project.",
+      note: "Ali Abdi · Application development",
       top: "Back to top",
+      source: "This portfolio’s source code",
     },
   },
 };

@@ -1,6 +1,5 @@
 import Image from "next/image";
-import type { Content } from "@/content/site";
-import { profile } from "@/content/site";
+import { profile, type Content } from "@/content/site";
 import { Icon } from "./Icons";
 import ExternalLink from "./ExternalLink";
 
@@ -10,14 +9,14 @@ export default function Hero({ text }: { text: Content["hero"] }) {
       id="home"
       className="hero section-shell"
       aria-labelledby="hero-title"
+      tabIndex={-1}
     >
       <div className="hero-copy">
-        <p className="eyebrow">
-          <span className="small-line" />
-          {text.eyebrow}
-        </p>
-        <p className="hero-greeting">{text.greeting}</p>
-        <h1 id="hero-title">{text.title}</h1>
+        <p className="eyebrow">{text.eyebrow}</p>
+        <h1 id="hero-title">
+          Ali Abdi<span aria-hidden="true">.</span>
+        </h1>
+        <p className="hero-role">{text.title}</p>
         <p className="hero-description">{text.description}</p>
         <div className="hero-actions">
           <a className="button button-primary" href="#projects">
@@ -29,63 +28,43 @@ export default function Hero({ text }: { text: Content["hero"] }) {
           </a>
         </div>
         <div className="hero-links">
-          <ExternalLink href={profile.github} aria-label="Ali Abdi – GitHub">
+          <ExternalLink href={profile.github}>
             <Icon name="github" />
             GitHub
+            <Icon name="external" width="14" height="14" />
           </ExternalLink>
-          <ExternalLink
-            href={profile.linkedin}
-            aria-label="Ali Abdi – LinkedIn"
+          <a
+            href={
+              profile.cv ??
+              `mailto:${profile.email}?subject=${encodeURIComponent(text.cvSubject)}`
+            }
+            download={profile.cv ? true : undefined}
           >
-            LinkedIn
-            <Icon name="external" width="15" height="15" />
-          </ExternalLink>
-          {profile.cv ? (
-            <a href={profile.cv} download className="cv-link">
-              <Icon name="download" />
-              {text.cv}
-            </a>
-          ) : (
-            <span className="cv-pending">
-              <button disabled aria-describedby="cv-status">
-                <Icon name="download" />
-                {text.cv}
-              </button>
-              <span id="cv-status">{text.cvPending}</span>
-            </span>
-          )}
+            <Icon name={profile.cv ? "download" : "mail"} />
+            {profile.cv ? text.cv : text.cvRequest}
+          </a>
         </div>
       </div>
       <figure className="hero-portrait">
-        <div className="portrait-frame">
-          <Image
-            src="/profile.webp"
-            alt={text.portraitAlt}
-            width={800}
-            height={800}
-            preload
-            sizes="(max-width: 767px) 85vw, (max-width: 1100px) 38vw, 420px"
-            className="portrait-image"
-          />
-          <div className="portrait-caption">
-            <span className="status-dot" />
-            {text.availability}
-          </div>
-        </div>
-        <figcaption>
-          <span>
-            <Icon name="pin" width="16" height="16" />
-            {text.location}
-          </span>
-          <span className="portrait-coordinate" aria-hidden="true">
-            DE / SL
-          </span>
-        </figcaption>
+        <Image
+          src="/profile.webp"
+          alt={text.portraitAlt}
+          width={800}
+          height={800}
+          preload
+          sizes="(max-width: 599px) 112px, (max-width: 900px) 240px, 300px"
+          className="portrait-image"
+        />
+        <figcaption>{text.availability}</figcaption>
       </figure>
-      <div className="hero-baseline">
-        <span>Ali Abdi / Portfolio</span>
-        <span>{text.caption}</span>
-      </div>
+      <dl className="profile-facts">
+        {text.facts.map((fact) => (
+          <div key={fact.label}>
+            <dt>{fact.label}</dt>
+            <dd>{fact.value}</dd>
+          </div>
+        ))}
+      </dl>
     </section>
   );
 }

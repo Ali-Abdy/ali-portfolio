@@ -13,8 +13,34 @@ type IconName =
   | "download"
   | "code"
   | "database"
-  | "tools";
+  | "tools"
+  | "plus"
+  | "copy"
+  | "check"
+  | "link"
+  | "print";
 const paths: Record<IconName, React.ReactNode> = {
+  plus: <path d="M5 12h14M12 5v14" />,
+  copy: (
+    <>
+      <rect x="8" y="8" width="12" height="13" rx="2" />
+      <path d="M16 8V3H3v13h5" />
+    </>
+  ),
+  check: <path d="m4 12 5 5L20 6" />,
+  link: (
+    <>
+      <path
+        d="m10 13 4-4M8 16l-2 2a3.5 3.5 0 0 1-5-5l5-5a3.5 3.5 0 0 1 5 0M16 8l2-2a3.5 3.5 0 0 1 5 5l-5 5a3.5 3.5 0 0 1-5 0"
+        transform="translate(0 -1)"
+      />
+    </>
+  ),
+  print: (
+    <>
+      <path d="M7 8V3h10v5M7 17H4V8h16v9h-3M7 14h10v7H7zM16 11h1" />
+    </>
+  ),
   arrow: (
     <>
       <path d="M4 12h15M13 6l6 6-6 6" />

@@ -1,5 +1,6 @@
 import { profile, type Content } from "@/content/site";
 import ExternalLink from "./ExternalLink";
+import { Icon } from "./Icons";
 export default function Footer({ text }: { text: Content["footer"] }) {
   return (
     <footer className="footer section-shell">
@@ -10,8 +11,10 @@ export default function Footer({ text }: { text: Content["footer"] }) {
         <p className="footer-note">{text.note}</p>
       </div>
       <div className="footer-links">
-        <ExternalLink href={profile.github}>GitHub</ExternalLink>
-        <ExternalLink href={profile.linkedin}>LinkedIn</ExternalLink>
+        <ExternalLink href={profile.repository}>
+          {text.source}
+          <Icon name="external" width="14" height="14" />
+        </ExternalLink>
         <a href="#home">{text.top} ↑</a>
       </div>
     </footer>

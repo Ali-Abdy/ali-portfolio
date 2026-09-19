@@ -1,8 +1,9 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTheme } from "next-themes";
-import type { Content, Locale } from "@/content/site";
+import type { Content, Locale, SectionId } from "@/content/site";
+import { useHydrated } from "@/lib/use-hydrated";
 import { Icon } from "./Icons";
 
 export default function TopBar({
@@ -12,18 +13,90 @@ export default function TopBar({
   text: Pick<Content, "nav" | "controls">;
   lang: Locale;
 }) {
-  const [open, setOpen] = useState(false);
-  const menuButton = useRef<HTMLButtonElement>(null);
+  const header = useRef<HTMLElement>(null);
+  const menu = useRef<HTMLDetailsElement>(null);
+  const [active, setActive] = useState<SectionId | null>(null);
   const { resolvedTheme, setTheme } = useTheme();
-  const closeMenu = () => setOpen(false);
+  const hydrated = useHydrated();
+  const closeMenu = () => {
+    if (menu.current) menu.current.open = false;
+  };
+
+  useEffect(() => {
+    const sections = text.nav
+      .map(({ id }) => document.getElementById(id))
+      .filter((section) => section !== null);
+    let frame = 0;
+    const update = () => {
+      frame = 0;
+      const readingLine = Math.min(window.innerHeight * 0.3, 180);
+      let current: SectionId | null = null;
+      for (const section of sections) {
+        if (section.getBoundingClientRect().top <= readingLine)
+          current = section.id as SectionId;
+      }
+      // The last section may be too short to reach the reading line.
+      if (
+        window.scrollY > 0 &&
+        window.scrollY + window.innerHeight >=
+          document.documentElement.scrollHeight - 2
+      )
+        current = "contact";
+      setActive(current);
+    };
+    const schedule = () => {
+      if (!frame) frame = requestAnimationFrame(update);
+    };
+    const resize = () => {
+      if (window.innerWidth > 850 && menu.current) menu.current.open = false;
+      schedule();
+    };
+    const outside = (event: PointerEvent) => {
+      if (
+        event.target instanceof Node &&
+        !header.current?.contains(event.target)
+      )
+        closeMenu();
+    };
+    update();
+    window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("resize", resize);
+    document.addEventListener("pointerdown", outside);
+    // Opening a project disclosure can move the following sections without scrolling.
+    const observer = new ResizeObserver(schedule);
+    sections.forEach((section) => observer.observe(section));
+    return () => {
+      cancelAnimationFrame(frame);
+      observer.disconnect();
+      window.removeEventListener("scroll", schedule);
+      window.removeEventListener("resize", resize);
+      document.removeEventListener("pointerdown", outside);
+    };
+  }, [text.nav]);
+
+  const links = text.nav.map((item) => (
+    <a
+      key={item.id}
+      href={`#${item.id}`}
+      aria-current={active === item.id ? "location" : undefined}
+      onClick={closeMenu}
+    >
+      {item.label}
+    </a>
+  ));
+
   return (
     <header
+      ref={header}
       className="site-header"
       onKeyDown={(event) => {
-        if (event.key === "Escape" && open) {
+        if (event.key === "Escape" && menu.current?.open) {
           closeMenu();
-          menuButton.current?.focus();
+          menu.current.querySelector("summary")?.focus();
         }
+      }}
+      onBlur={(event) => {
+        if (!event.currentTarget.contains(event.relatedTarget)) closeMenu();
       }}
     >
       <div className="navbar section-shell">
@@ -34,23 +107,23 @@ export default function TopBar({
           onClick={closeMenu}
         >
           <span className="brand-mark" aria-hidden="true">
-            a<span>.</span>
+            aa
           </span>
           <span>Ali Abdi</span>
         </a>
         <nav className="desktop-nav" aria-label={text.controls.navigation}>
-          {text.nav.map((item) => (
-            <a key={item.id} href={`#${item.id}`}>
-              {item.label}
-            </a>
-          ))}
+          {links}
         </nav>
         <div className="nav-controls">
-          <div className="language-switch" aria-label={text.controls.language}>
+          <div
+            className="language-switch"
+            role="group"
+            aria-label={text.controls.language}
+          >
             {(["de", "en"] as const).map((locale) => (
               <a
                 key={locale}
-                href={`/${locale}`}
+                href={`/${locale}${active ? `#${active}` : ""}`}
                 hrefLang={locale}
                 lang={locale}
                 aria-current={locale === lang ? "page" : undefined}
@@ -61,7 +134,9 @@ export default function TopBar({
             ))}
           </div>
           <button
+            type="button"
             className="icon-button theme-toggle"
+            hidden={!hydrated}
             onClick={() =>
               setTheme(resolvedTheme === "dark" ? "light" : "dark")
             }
@@ -75,31 +150,21 @@ export default function TopBar({
               <span className="sr-only">{text.controls.dark}</span>
             </span>
           </button>
-          <button
-            ref={menuButton}
-            className="icon-button mobile-menu-button"
-            aria-expanded={open}
-            aria-controls="mobile-navigation"
-            aria-label={open ? text.controls.closeMenu : text.controls.openMenu}
-            onClick={() => setOpen(!open)}
-          >
-            <Icon name={open ? "close" : "menu"} />
-          </button>
+          <details ref={menu} className="mobile-menu">
+            <summary className="menu-toggle">
+              <span>{text.controls.menu}</span>
+              <Icon name="menu" />
+            </summary>
+            <nav
+              id="mobile-navigation"
+              className="mobile-nav"
+              aria-label={text.controls.navigation}
+            >
+              {links}
+            </nav>
+          </details>
         </div>
       </div>
-      <nav
-        id="mobile-navigation"
-        className="mobile-nav section-shell"
-        aria-label={text.controls.navigation}
-        hidden={!open}
-      >
-        {text.nav.map((item) => (
-          <a key={item.id} href={`#${item.id}`} onClick={closeMenu}>
-            {item.label}
-            <Icon name="arrow" width="16" height="16" />
-          </a>
-        ))}
-      </nav>
     </header>
   );
 }
