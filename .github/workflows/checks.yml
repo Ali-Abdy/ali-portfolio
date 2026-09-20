@@ -1,0 +1,44 @@
+name: Portfolio checks
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: checks-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Scan Git history for secrets
+        shell: bash
+        run: |
+          scanner_dir="$(mktemp -d "$RUNNER_TEMP/gitleaks.XXXXXX")"
+          archive="$scanner_dir/gitleaks.tar.gz"
+          curl --fail --silent --show-error --location --retry 3 --max-time 120 \
+            https://github.com/gitleaks/gitleaks/releases/download/v8.30.1/gitleaks_8.30.1_linux_x64.tar.gz \
+            --output "$archive"
+          printf '%s  %s\n' '551f6fc83ea457d62a0d98237cbad105af8d557003051f41f3e7ca7b3f2470eb' "$archive" | sha256sum --check --strict
+          tar -xzf "$archive" -C "$scanner_dir" gitleaks
+          "$scanner_dir/gitleaks" git . --log-opts='--all' --redact=100 --no-banner
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm audit --audit-level=low
+      - run: npm run lint
+      - run: npm run typecheck
+      - run: npm run build
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:e2e

@@ -1,5 +1,13 @@
 import { ImageResponse } from "next/og";
-import { content, isLocale } from "@/content/site";
+import { content, isLocale, locales } from "@/content/site";
+
+// Generate the two fixed cards at build time, never from visitor input.
+export const dynamic = "force-static";
+export const dynamicParams = false;
+export function generateStaticParams() {
+  return locales.map((lang) => ({ lang }));
+}
+
 const size = { width: 1200, height: 630 };
 export async function GET(
   _request: Request,

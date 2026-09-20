@@ -35,10 +35,12 @@ npm run test:e2e
 
 The suite starts the production server on port 3107 and checks both languages, eight viewport widths, navigation, themes, accessibility, links, and metadata assets. It also checks clipboard success and refusal, context-preserving language changes, project disclosures, printing, and the JavaScript-disabled fallback.
 
+Security regression tests also check response headers, browser policy enforcement, restricted image optimization, static social cards, and sensitive-path handling. `.github/workflows/checks.yml` runs these checks, dependency auditing, and a Git history secret scan on pushes and pull requests with read-only repository permissions; it does not deploy the site.
+
 ## Structure
 
 - `app/[lang]/` — statically generated localized pages, root layout
-- `app/social/[lang]/` — localized social preview images
+- `app/social/[lang]/` — localized social preview images generated at build time
 - `components/` — semantic portfolio sections and navigation
 - `content/site.ts` — typed German/English copy and personal contact links
 - `content/projects.ts` — project data, status, features, and learning notes
@@ -46,6 +48,7 @@ The suite starts the production server on port 3107 and checks both languages, e
 - `public/` — portrait, project visual, and personal icons
 - `tests/` — browser and accessibility checks
 - `docs/design-review.md` — design findings, decisions, and review references
+- `docs/security-review.md` — security findings, limits, verification, and launch checks
 
 ## Updating content
 
@@ -58,3 +61,5 @@ Project headings have stable fragment links. Native disclosures reveal technical
 ## Public deployment
 
 Deploy as a standard Next.js application. Once the real production origin is known, set `SITE_URL` to that full origin in the hosting environment and rebuild. This enables absolute canonical URLs, language alternates, social-image URLs, and sitemap entries. Without it, no guessed canonical/domain is emitted and the sitemap remains empty. Review the final CV, copy, and project links before sharing the public URL in applications.
+
+Complete the hosting/account and legal checks in [the security review](docs/security-review.md) before publishing. The CSP preserves static rendering and permits inline framework scripts; it is not a strict XSS policy. New untrusted content or backend features require a fresh security review. Only `/profile.webp` is allowed through the image optimizer; explicitly review the allowlist and limits when adding another optimized image.
