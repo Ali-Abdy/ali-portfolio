@@ -37,6 +37,10 @@ The suite starts the production server on port 3107 and checks both languages, e
 
 Security regression tests also check response headers, browser policy enforcement, restricted image optimization, static social cards, and sensitive-path handling. `.github/workflows/checks.yml` runs these checks, dependency auditing, and a Git history secret scan on pushes and pull requests with read-only repository permissions; it does not deploy the site.
 
+Privacy tests verify that initial browsing creates no cookies or storage entries, that choosing a theme only stores `theme`, and that the site remains usable when browser storage is blocked. These test the application locally; host-injected services and production logs need a separate deployment review.
+
+The footer links to the font and third-party library notices. After dependency changes, run `npm run licenses:generate`, review the changes to `public/third-party-notices.txt`, and commit them. `npm run licenses:check` verifies freshness in CI. This preserves supplied notices; it does not automatically approve new dependency license terms.
+
 ## Structure
 
 - `app/[lang]/` — statically generated localized pages, root layout
@@ -45,14 +49,16 @@ Security regression tests also check response headers, browser policy enforcemen
 - `content/site.ts` — typed German/English copy and personal contact links
 - `content/projects.ts` — project data, status, features, and learning notes
 - `lib/site-url.ts` — optional production origin
-- `public/` — portrait, project visual, and personal icons
+- `public/` — served portrait, personal icons, and third-party notices
+- `assets/source/` — unused source images, excluded from the site's public routes
 - `tests/` — browser and accessibility checks
 - `docs/design-review.md` — design findings, decisions, and review references
 - `docs/security-review.md` — security findings, limits, verification, and launch checks
+- `docs/legal-review.md` — verified privacy facts, legal review, and missing release information
 
 ## Updating content
 
-Set `profile.cv` in `content/site.ts` only after adding the real PDF under `public/cv/`. Until then, the working CV action opens an email request; no unavailable download is advertised. The original `public/profile.png` is retained as a source; the page delivers the optimized WebP.
+Set `profile.cv` in `content/site.ts` only after adding the real PDF under `public/cv/`. Until then, the working CV action opens an email request; no unavailable download is advertised. The original portrait is retained at `assets/source/profile.png`; the page delivers `public/profile.webp`. Source assets remain visible through the public repository and its history; moving them does not make them private.
 
 Luxury Barbershop is explicitly in development. Project entries show actual implementation notes and source links instead of decorative imagery. Skycast is an early API learning project, not presented as a production-ready service. Codex was omitted because its unfinished weather features overlap with Skycast. No live demo URL has been invented. The separate project repositories were not modified.
 

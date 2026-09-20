@@ -83,7 +83,7 @@ export type Content = {
     print: string;
     printHint: string;
   };
-  footer: { note: string; top: string; source: string };
+  footer: { note: string; top: string; source: string; licenses: string };
 };
 
 export const content: Record<Locale, Content> = {
@@ -236,6 +236,7 @@ export const content: Record<Locale, Content> = {
       note: "Ali Abdi · Anwendungsentwicklung",
       top: "Zurück nach oben",
       source: "Quellcode dieses Portfolios",
+      licenses: "Drittanbieter-Lizenzen",
     },
   },
   en: {
@@ -387,6 +388,7 @@ export const content: Record<Locale, Content> = {
       note: "Ali Abdi · Application development",
       top: "Back to top",
       source: "This portfolio’s source code",
+      licenses: "Third-party licenses",
     },
   },
 };
