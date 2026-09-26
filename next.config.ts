@@ -1,6 +1,27 @@
 import type { NextConfig } from "next";
 
 const isDevelopment = process.env.NODE_ENV === "development";
+
+// A production Vercel deployment must not accidentally publish without its
+// final canonical origin or the legal pages enabled with approved details.
+if (process.env.VERCEL_ENV === "production") {
+  if (!process.env.SITE_URL) {
+    throw new Error(
+      "Set SITE_URL before creating a Vercel production deployment",
+    );
+  }
+  if (process.env.LEGAL_PAGES_ENABLED !== "true") {
+    throw new Error(
+      "Set LEGAL_PAGES_ENABLED=true only after configuring the approved legal contact details",
+    );
+  }
+  if (process.env.PRIVACY_NOTICE_REVIEWED !== "true") {
+    throw new Error(
+      "Set PRIVACY_NOTICE_REVIEWED=true only after the published privacy notice matches the final Vercel and email configuration",
+    );
+  }
+}
+
 const contentSecurityPolicy = [
   "default-src 'self'",
   // Static Next.js hydration and next-themes require inline bootstrap scripts.
