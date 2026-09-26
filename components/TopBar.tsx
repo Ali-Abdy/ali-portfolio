@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { type MouseEvent, useEffect, useRef, useState } from "react";
 import { useTheme } from "next-themes";
 import type { Content, Locale, SectionId } from "@/content/site";
 import { useHydrated } from "@/lib/use-hydrated";
@@ -100,6 +100,16 @@ export default function TopBar({
     closeMenu();
   };
 
+  const preserveCurrentAnchor = (
+    event: MouseEvent<HTMLAnchorElement>,
+    locale: Locale,
+  ) => {
+    const id = window.location.hash.slice(1);
+    if (id && document.getElementById(id)) {
+      event.currentTarget.href = `/${locale}#${id}`;
+    }
+  };
+
   const links = text.nav.map((item) => (
     <a
       key={item.id}
@@ -154,6 +164,7 @@ export default function TopBar({
                 lang={locale}
                 aria-current={locale === lang ? "page" : undefined}
                 aria-label={locale === "de" ? "Deutsch" : "English"}
+                onClick={(event) => preserveCurrentAnchor(event, locale)}
               >
                 {locale.toUpperCase()}
               </a>
