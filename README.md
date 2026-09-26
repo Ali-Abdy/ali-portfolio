@@ -4,7 +4,7 @@ A German-first personal portfolio for internships and vocational training as a *
 
 ## Stack
 
-Next.js 16 App Router, React 19, strict TypeScript, Tailwind CSS 3, custom CSS, and next-themes. Content is rendered on the server; navigation enhancement, theme controls, email copying, and print preparation use small client components. No database, analytics, contact backend, or API credentials are required.
+Next.js 16 App Router, React 19, strict TypeScript, Tailwind CSS 3, custom CSS, next-themes, Three.js, and React Three Fiber. Content is rendered on the server; navigation enhancement, theme controls, email copying, print preparation, and the deferred interactive hero background use small client components. No database, analytics, contact backend, or API credentials are required.
 
 ## Development
 
@@ -37,7 +37,7 @@ The suite starts the production server on port 3107 and checks both languages, e
 
 Security regression tests also check response headers, browser policy enforcement, restricted image optimization, static social cards, and sensitive-path handling. `.github/workflows/checks.yml` runs these checks, dependency auditing, and a Git history secret scan on pushes and pull requests with read-only repository permissions; it does not deploy the site.
 
-Privacy tests verify that initial browsing creates no cookies or storage entries, that choosing a theme only stores `theme`, and that the site remains usable when browser storage is blocked. These test the application locally; host-injected services and production logs need a separate deployment review.
+Privacy tests verify that initial browsing creates no cookies or storage entries, that choosing a theme only stores `theme`, and that the site remains usable when browser storage is blocked. The Antigravity canvas is a local dependency and does not request external services. These test the application locally; host-injected services and production logs need a separate deployment review.
 
 The footer links to the font and third-party library notices. After dependency changes, run `npm run licenses:generate`, review the changes to `public/third-party-notices.txt`, and commit them. `npm run licenses:check` verifies freshness in CI. This preserves supplied notices; it does not automatically approve new dependency license terms.
 

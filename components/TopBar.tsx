@@ -15,6 +15,8 @@ export default function TopBar({
 }) {
   const header = useRef<HTMLElement>(null);
   const menu = useRef<HTMLDetailsElement>(null);
+  const pendingAnchor = useRef<SectionId | null>(null);
+  const pendingAnchorTimeout = useRef<number | undefined>(undefined);
   const [active, setActive] = useState<SectionId | null>(null);
   const { resolvedTheme, setTheme } = useTheme();
   const hydrated = useHydrated();
@@ -29,6 +31,10 @@ export default function TopBar({
     let frame = 0;
     const update = () => {
       frame = 0;
+      if (pendingAnchor.current) {
+        setActive(pendingAnchor.current);
+        return;
+      }
       const readingLine = Math.min(window.innerHeight * 0.3, 180);
       let current: SectionId | null = null;
       for (const section of sections) {
@@ -51,6 +57,11 @@ export default function TopBar({
       if (window.innerWidth > 850 && menu.current) menu.current.open = false;
       schedule();
     };
+    const completeAnchorNavigation = () => {
+      pendingAnchor.current = null;
+      window.clearTimeout(pendingAnchorTimeout.current);
+      update();
+    };
     const outside = (event: PointerEvent) => {
       if (
         event.target instanceof Node &&
@@ -60,6 +71,7 @@ export default function TopBar({
     };
     update();
     window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("scrollend", completeAnchorNavigation);
     window.addEventListener("resize", resize);
     document.addEventListener("pointerdown", outside);
     // Opening a project disclosure can move the following sections without scrolling.
@@ -67,19 +79,33 @@ export default function TopBar({
     sections.forEach((section) => observer.observe(section));
     return () => {
       cancelAnimationFrame(frame);
+      window.clearTimeout(pendingAnchorTimeout.current);
       observer.disconnect();
       window.removeEventListener("scroll", schedule);
+      window.removeEventListener("scrollend", completeAnchorNavigation);
       window.removeEventListener("resize", resize);
       document.removeEventListener("pointerdown", outside);
     };
   }, [text.nav]);
+
+  const selectSection = (id: SectionId) => {
+    pendingAnchor.current = id;
+    window.clearTimeout(pendingAnchorTimeout.current);
+    // `scrollend` clears the lock after smooth anchor navigation. This fallback
+    // keeps language links accurate in browsers that do not fire that event.
+    pendingAnchorTimeout.current = window.setTimeout(() => {
+      pendingAnchor.current = null;
+    }, 1000);
+    setActive(id);
+    closeMenu();
+  };
 
   const links = text.nav.map((item) => (
     <a
       key={item.id}
       href={`#${item.id}`}
       aria-current={active === item.id ? "location" : undefined}
-      onClick={closeMenu}
+      onClick={() => selectSection(item.id)}
     >
       {item.label}
     </a>

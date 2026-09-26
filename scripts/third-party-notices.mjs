@@ -13,6 +13,9 @@ const files = [
   "node_modules/styled-jsx/license.md",
   "node_modules/@swc/helpers/LICENSE",
   "node_modules/tslib/LICENSE.txt",
+  "node_modules/three/LICENSE",
+  "licenses/react-three-fiber/MIT.txt",
+  "licenses/react-bits/LICENSE.md",
 ];
 
 // Preserve the notices shipped with Next.js's vendored dependencies as well.

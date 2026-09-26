@@ -2,6 +2,7 @@ import Image from "next/image";
 import { profile, type Content } from "@/content/site";
 import { Icon } from "./Icons";
 import ExternalLink from "./ExternalLink";
+import HeroAntigravity from "./HeroAntigravity";
 
 export default function Hero({ text }: { text: Content["hero"] }) {
   return (
@@ -11,6 +12,7 @@ export default function Hero({ text }: { text: Content["hero"] }) {
       aria-labelledby="hero-title"
       tabIndex={-1}
     >
+      <HeroAntigravity />
       <div className="hero-copy">
         <p className="eyebrow">{text.eyebrow}</p>
         <h1 id="hero-title">

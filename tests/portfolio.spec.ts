@@ -279,6 +279,23 @@ test("mobile menu closes when focus leaves or the viewport changes", async ({
   await expect(page.locator("#mobile-navigation")).toBeHidden();
 });
 
+test("Antigravity remains local, responsive, and disabled for reduced motion", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto("/de");
+  await expect(page.locator(".hero-antigravity canvas")).toBeVisible();
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= window.innerWidth,
+    ),
+  ).toBe(true);
+
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.reload();
+  await expect(page.locator(".hero-antigravity canvas")).toHaveCount(0);
+});
+
 test("default route, unknown routes, metadata assets, keyboard and reduced motion", async ({
   page,
   request,
