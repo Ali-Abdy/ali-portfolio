@@ -29,7 +29,7 @@ export default async function Home({
         <About text={text.about} />
         <Contact text={text.contact} />
       </main>
-      <Footer text={text.footer} />
+      <Footer text={text.footer} lang={lang} />
     </>
   );
 }

@@ -83,7 +83,46 @@ export type Content = {
     print: string;
     printHint: string;
   };
-  footer: { note: string; top: string; source: string; licenses: string };
+  footer: {
+    note: string;
+    top: string;
+    source: string;
+    licenses: string;
+    legal: string;
+    privacy: string;
+  };
+  legal: {
+    back: string;
+    legal: {
+      title: string;
+      description: string;
+      heading: string;
+      operator: string;
+      contact: string;
+      purpose: string;
+      privacyLink: string;
+    };
+    privacy: {
+      title: string;
+      description: string;
+      heading: string;
+      intro: string;
+      controllerHeading: string;
+      controller: string;
+      hostingHeading: string;
+      hosting: string;
+      storageHeading: string;
+      storage: string;
+      emailHeading: string;
+      email: string;
+      linksHeading: string;
+      links: string;
+      rightsHeading: string;
+      rights: string;
+      complaint: string;
+      legalLink: string;
+    };
+  };
 };
 
 export const content: Record<Locale, Content> = {
@@ -119,10 +158,10 @@ export const content: Record<Locale, Content> = {
       cvRequest: "Lebenslauf anfragen",
       cvSubject: "Anfrage: Lebenslauf von Ali Abdi",
       availability: "Offen für Praktikum & Ausbildung",
-      location: "Saarland, Deutschland",
+      location: "Saarlouis, Deutschland",
       portraitAlt: "Ali Abdi",
       facts: [
-        { label: "Standort", value: "Saarland, Deutschland" },
+        { label: "Standort", value: "Saarlouis, Deutschland" },
         { label: "Gesucht", value: "Praktikum oder Ausbildung" },
         {
           label: "Berufsziel",
@@ -188,7 +227,7 @@ export const content: Record<Locale, Content> = {
     about: {
       label: "03 / Über mich",
       title: "Mein Weg in die Anwendungsentwicklung.",
-      intro: "Ich bin Ali und lebe im Saarland.",
+      intro: "Ich bin Ali und lebe in Saarlouis, Deutschland.",
       paragraphs: [
         "Mich interessiert, wie aus einer Oberfläche eine funktionierende Anwendung wird: Wie kommen Daten auf die Seite? Wie greifen Anmeldung, Benutzerrollen und Datenbank ineinander? An diesen Fragen arbeite ich in meinen Projekten.",
         "Ich stehe am Anfang meiner beruflichen Entwicklung. In einem Praktikum oder einer Ausbildung möchte ich meine Grundlagen vertiefen und lernen, wie ein Entwicklungsteam Software plant, prüft und betreut.",
@@ -226,7 +265,7 @@ export const content: Record<Locale, Content> = {
       copySuccess: "E-Mail-Adresse kopiert.",
       copyFailure:
         "Kopieren ist hier nicht möglich. Bitte markieren und kopieren Sie die E-Mail-Adresse direkt.",
-      location: "Saarland, Deutschland",
+      location: "Saarlouis, Deutschland",
       profiles: "Weitere Profile",
       print: "Portfolio drucken",
       printHint:
@@ -237,13 +276,57 @@ export const content: Record<Locale, Content> = {
       top: "Zurück nach oben",
       source: "Quellcode dieses Portfolios",
       licenses: "Drittanbieter-Lizenzen",
+      legal: "Impressum",
+      privacy: "Datenschutz",
+    },
+    legal: {
+      back: "Zurück zum Portfolio",
+      legal: {
+        title: "Impressum · Ali Abdi",
+        description: "Anbieterinformationen für das Portfolio von Ali Abdi.",
+        heading: "Impressum",
+        operator: "Angaben zum Anbieter",
+        contact: "Kontakt",
+        purpose:
+          "Dieses persönliche Portfolio informiert über eigene Lernprojekte sowie die Suche nach einem Praktikum oder einer Ausbildung in der Anwendungsentwicklung.",
+        privacyLink: "Zur Datenschutzerklärung",
+      },
+      privacy: {
+        title: "Datenschutzerklärung · Ali Abdi",
+        description:
+          "Hinweise zur Datenverarbeitung auf dem Portfolio von Ali Abdi.",
+        heading: "Datenschutzerklärung",
+        intro:
+          "Diese Hinweise beschreiben die Verarbeitung, die durch die Website selbst erfolgt. Sie gelten nur, wenn die Seite mit den hier genannten Einstellungen veröffentlicht ist.",
+        controllerHeading: "Verantwortliche Person",
+        controller:
+          "Verantwortlich für die Inhalte dieser Website ist die im Impressum genannte Person.",
+        hostingHeading: "Hosting und Server-Protokolle",
+        hosting:
+          "Beim Aufruf einer Website verarbeitet der eingesetzte Hosting-Anbieter technisch erforderliche Verbindungs- und Anfrageinformationen, etwa IP-Adresse und Zeitpunkt, um die Seite bereitzustellen und ihre Sicherheit zu gewährleisten. Der konkrete Anbieter, seine Empfänger, Speicherfristen und mögliche Drittlandtransfers werden vor der Veröffentlichung anhand der tatsächlich gewählten Konfiguration ergänzt.",
+        storageHeading: "Speicherung im Browser",
+        storage:
+          "Diese Website setzt keine Analyse-, Marketing- oder Tracking-Cookies ein. Erst wenn Sie das Farbschema selbst ändern, speichert Ihr Browser die Auswahl lokal unter dem Schlüssel „theme“. Diese Einstellung wird nicht durch die Website an einen eigenen Server übermittelt und bleibt bestehen, bis Sie sie ändern oder die Website-Daten im Browser löschen.",
+        emailHeading: "E-Mail",
+        email:
+          "Ein Kontaktformular gibt es nicht. Über einen E-Mail-Link öffnet die Website Ihr eigenes E-Mail-Programm. Wenn Sie eine Nachricht senden, verarbeiten die beteiligten E-Mail-Anbieter und der Empfänger die darin enthaltenen Angaben zur Bearbeitung Ihrer Anfrage. Informationen zu konkreten Speicherfristen werden vor der Veröffentlichung für das tatsächlich verwendete Postfach ergänzt.",
+        linksHeading: "Externe Links",
+        links:
+          "Links zu GitHub, LinkedIn und Projekt-Repositories sind gewöhnliche Verweise. Erst nach dem Anklicken gelten die Datenschutzhinweise der jeweiligen Anbieter.",
+        rightsHeading: "Ihre Rechte",
+        rights:
+          "Soweit die Datenschutz-Grundverordnung anwendbar ist, können Sie unter den gesetzlichen Voraussetzungen Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung, Widerspruch und Datenübertragbarkeit verlangen. Eine erteilte Einwilligung können Sie mit Wirkung für die Zukunft widerrufen.",
+        complaint:
+          "Sie können sich außerdem bei einer zuständigen Datenschutzaufsichtsbehörde beschweren; für Saarland ist dies das Unabhängige Datenschutzzentrum Saarland.",
+        legalLink: "Zum Impressum",
+      },
     },
   },
   en: {
     metadata: {
       title: "Ali Abdi · Web development · Internships & vocational training",
       description:
-        "Projects, skills, and contact details for Ali Abdi in Saarland, Germany. Seeking an internship or vocational training in application development.",
+        "Projects, skills, and contact details for Ali Abdi in Saarlouis, Germany. Seeking an internship or vocational training in application development.",
     },
     nav: [
       { id: "projects", label: "Projects" },
@@ -271,10 +354,10 @@ export const content: Record<Locale, Content> = {
       cvRequest: "Request my CV",
       cvSubject: "Request: Ali Abdi’s CV",
       availability: "Open to internships & vocational training",
-      location: "Saarland, Germany",
+      location: "Saarlouis, Germany",
       portraitAlt: "Ali Abdi",
       facts: [
-        { label: "Based in", value: "Saarland, Germany" },
+        { label: "Based in", value: "Saarlouis, Germany" },
         { label: "Looking for", value: "Internship or vocational training" },
         {
           label: "Career goal",
@@ -340,7 +423,7 @@ export const content: Record<Locale, Content> = {
     about: {
       label: "03 / About",
       title: "My path into application development.",
-      intro: "I’m Ali, based in Saarland, Germany.",
+      intro: "I’m Ali, based in Saarlouis, Germany.",
       paragraphs: [
         "I’m interested in how an interface becomes a working application: how does data reach the page? How do authentication, user roles, and a database fit together? These are the questions I work through in my projects.",
         "I’m at the start of my career. Through an internship or vocational training, I want to strengthen my foundations and learn how a development team plans, tests, and maintains software.",
@@ -378,7 +461,7 @@ export const content: Record<Locale, Content> = {
       copySuccess: "Email address copied.",
       copyFailure:
         "Copying isn’t available here. Please select and copy the email address directly.",
-      location: "Saarland, Germany",
+      location: "Saarlouis, Germany",
       profiles: "Elsewhere",
       print: "Print portfolio",
       printHint:
@@ -389,6 +472,50 @@ export const content: Record<Locale, Content> = {
       top: "Back to top",
       source: "This portfolio’s source code",
       licenses: "Third-party licenses",
+      legal: "Legal notice",
+      privacy: "Privacy",
+    },
+    legal: {
+      back: "Back to portfolio",
+      legal: {
+        title: "Legal notice · Ali Abdi",
+        description: "Provider information for Ali Abdi’s portfolio.",
+        heading: "Legal notice",
+        operator: "Provider information",
+        contact: "Contact",
+        purpose:
+          "This personal portfolio presents my learning projects and my search for an internship or vocational training in application development.",
+        privacyLink: "Read the privacy notice",
+      },
+      privacy: {
+        title: "Privacy notice · Ali Abdi",
+        description:
+          "Information about data processing on Ali Abdi’s portfolio.",
+        heading: "Privacy notice",
+        intro:
+          "This notice describes processing performed by the website itself. It applies only when the site is published with the settings described here.",
+        controllerHeading: "Controller",
+        controller:
+          "The person named in the legal notice is responsible for this website’s content.",
+        hostingHeading: "Hosting and server logs",
+        hosting:
+          "When a website is requested, its hosting provider processes technically necessary connection and request information, such as an IP address and time of request, to deliver the site and maintain security. Before publication, the actual provider, recipients, retention criteria, and any international transfers will be completed from the configuration in use.",
+        storageHeading: "Browser storage",
+        storage:
+          "This website does not use analytics, marketing, or tracking cookies. Only after you change the colour theme yourself does your browser store that choice locally under the key “theme”. The website does not send this preference to its own server; it remains until you change it or clear website data in your browser.",
+        emailHeading: "Email",
+        email:
+          "There is no contact form. An email link opens your own email application. If you send a message, the participating email providers and recipient process the information it contains to handle your enquiry. The retention criteria for the mailbox actually used will be completed before publication.",
+        linksHeading: "External links",
+        links:
+          "Links to GitHub, LinkedIn, and project repositories are ordinary hyperlinks. Each provider’s own privacy notice applies only after you choose to follow a link.",
+        rightsHeading: "Your rights",
+        rights:
+          "Where the GDPR applies, you may, subject to the legal conditions, request access, rectification, erasure, restriction of processing, object to processing, and request data portability. You may withdraw consent for the future where consent was given.",
+        complaint:
+          "You may also complain to a competent data-protection supervisory authority. The relevant authority in Saarland is the Unabhängige Datenschutzzentrum Saarland.",
+        legalLink: "Read the legal notice",
+      },
     },
   },
 };

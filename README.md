@@ -55,6 +55,7 @@ The footer links to the font and third-party library notices. After dependency c
 - `docs/design-review.md` — design findings, decisions, and review references
 - `docs/security-review.md` — security findings, limits, verification, and launch checks
 - `docs/legal-review.md` — verified privacy facts, legal review, and missing release information
+- `docs/launch-checklist.md` — required Vercel and legal decisions before public release
 
 ## Updating content
 
@@ -66,6 +67,6 @@ Project headings have stable fragment links. Native disclosures reveal technical
 
 ## Public deployment
 
-Deploy as a standard Next.js application. Once the real production origin is known, set `SITE_URL` to that full origin in the hosting environment and rebuild. This enables absolute canonical URLs, language alternates, social-image URLs, and sitemap entries. Without it, no guessed canonical/domain is emitted and the sitemap remains empty. Review the final CV, copy, and project links before sharing the public URL in applications.
+Deploy as a standard Next.js application. Once the real production origin is known, set `SITE_URL` to that HTTPS origin in the hosting environment and rebuild. This enables absolute canonical URLs, language alternates, social-image URLs, and sitemap entries. Without it, no guessed canonical/domain is emitted and the sitemap remains empty. Vercel production builds are intentionally blocked until `SITE_URL` is set, the legal pages are enabled with approved server-side address details, and the privacy notice has been reviewed against the final host and mailbox configuration. See [the release checklist](docs/launch-checklist.md) before sharing the public URL in applications.
 
 Complete the hosting/account and legal checks in [the security review](docs/security-review.md) before publishing. The CSP preserves static rendering and permits inline framework scripts; it is not a strict XSS policy. New untrusted content or backend features require a fresh security review. Only `/profile.webp` is allowed through the image optimizer; explicitly review the allowlist and limits when adding another optimized image.
