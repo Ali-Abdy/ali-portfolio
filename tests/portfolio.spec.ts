@@ -312,8 +312,42 @@ test("the local background is decorative, responsive, and reduced-motion safe", 
     ),
   ).toBe(true);
 
+  const firstBox = page.locator(".background-box-one");
+  const firstBoxBounds = await firstBox.boundingBox();
+  expect(firstBoxBounds).not.toBeNull();
+  await page.mouse.move(
+    firstBoxBounds!.x + firstBoxBounds!.width / 2,
+    firstBoxBounds!.y + firstBoxBounds!.height / 2,
+  );
+  await expect
+    .poll(async () =>
+      Number(
+        await firstBox.evaluate((element) =>
+          getComputedStyle(element).getPropertyValue("--background-proximity"),
+        ),
+      ),
+    )
+    .toBeGreaterThan(0.8);
+  await page.mouse.move(1420, 880);
+  await expect
+    .poll(async () =>
+      Number(
+        await firstBox.evaluate((element) =>
+          getComputedStyle(element).getPropertyValue("--background-proximity"),
+        ),
+      ),
+    )
+    .toBeLessThan(0.05);
+
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.reload();
+  await page.mouse.move(150, 150);
+  await page.waitForTimeout(100);
+  expect(
+    await firstBox.evaluate((element) =>
+      element.style.getPropertyValue("--background-proximity"),
+    ),
+  ).toBe("");
   await expect(page.locator(".typewriter-cursor")).toHaveCount(0);
   await expect(page.locator(".hero-typewriter")).toContainText(
     "Ich entwickle Webanwendungen.",

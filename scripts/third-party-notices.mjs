@@ -5,6 +5,7 @@ import { fileURLToPath } from "node:url";
 const root = fileURLToPath(new URL("../", import.meta.url));
 const files = [
   "licenses/geist/OFL.txt",
+  "licenses/uzair-portfolio-react/MIT.txt",
   "node_modules/next/license.md",
   "node_modules/react/LICENSE",
   "node_modules/react-dom/LICENSE",

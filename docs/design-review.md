@@ -27,7 +27,7 @@ Navy backgrounds, royal-blue actions, restrained borders, readable secondary tex
 
 ## Engineering choices
 
-- Keep content in the two typed locale files. The local typewriter is omitted for reduced motion and does not announce changing characters to assistive technologies.
+- Keep content in the two typed locale files. The local typewriter is omitted for reduced motion and does not announce changing characters to assistive technologies. The global pointer spotlight is adapted from Uzair Ali's MIT-licensed `Portfolio-React` (`frontend/src/App.js` and `App.css`); its notice is included in the generated third-party notices.
 - Keep page sections server-rendered. Use client code only for navigation enhancement, theme selection, clipboard feedback, and printing.
 - Use native links and disclosures so the core content, project details, mobile navigation, and contact address work without JavaScript.
 - Keep project status explicit. Luxury Barbershop is in development and Skycast is a learning prototype.

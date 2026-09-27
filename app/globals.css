@@ -118,6 +118,18 @@ svg {
     linear-gradient(180deg, var(--bg) 0%, #09192e 52%, var(--bg) 100%);
   overflow: hidden;
 }
+.background-spotlight {
+  position: absolute;
+  inset: 0;
+  opacity: var(--pointer-visible, 0);
+  background: radial-gradient(
+    260px circle at var(--pointer-x, -270px) var(--pointer-y, -270px),
+    rgba(59, 130, 246, 0.14),
+    rgba(29, 78, 216, 0.045) 35%,
+    transparent 70%
+  );
+  transition: opacity 220ms ease-out;
+}
 .site-background::before {
   content: "";
   position: absolute;
@@ -132,9 +144,22 @@ svg {
 .background-box {
   position: absolute;
   display: block;
-  border: 1px solid rgba(96, 165, 250, 0.2);
-  box-shadow: inset 0 0 0 1px rgba(29, 78, 216, 0.06);
-  transform: rotate(18deg);
+  --background-proximity: 0;
+  border: 1px solid
+    rgb(96 165 250 / calc(0.18 + var(--background-proximity) * 0.62));
+  background: radial-gradient(
+    circle at center,
+    rgb(59 130 246 / calc(var(--background-proximity) * 0.12)),
+    transparent 68%
+  );
+  box-shadow:
+    inset 0 0 0 1px rgb(29 78 216 / calc(0.06 + var(--background-proximity) * 0.18)),
+    0 0 calc(5px + var(--background-proximity) * 24px)
+      rgb(96 165 250 / calc(var(--background-proximity) * 0.34));
+  transform: rotate(var(--background-rotation, 18deg))
+    scale(calc(1 + var(--background-proximity) * 0.18));
+  transform-origin: center;
+  will-change: transform, border-color, box-shadow;
 }
 .background-box-one {
   width: 74px;
@@ -147,28 +172,28 @@ svg {
   height: 66px;
   top: 27%;
   right: 9%;
-  transform: rotate(-24deg);
+  --background-rotation: -24deg;
 }
 .background-box-three {
   width: 44px;
   height: 44px;
   top: 56%;
   left: 13%;
-  transform: rotate(45deg);
+  --background-rotation: 45deg;
 }
 .background-box-four {
   width: 112px;
   height: 112px;
   top: 68%;
   right: 13%;
-  transform: rotate(12deg);
+  --background-rotation: 12deg;
 }
 .background-box-five {
   width: 58px;
   height: 88px;
   bottom: 7%;
   left: 42%;
-  transform: rotate(-18deg);
+  --background-rotation: -18deg;
 }
 .portfolio-page > :not(.site-background) {
   position: relative;
