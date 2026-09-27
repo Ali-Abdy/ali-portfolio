@@ -30,11 +30,9 @@ export type Content = {
   };
   hero: {
     eyebrow: string;
-    title: string;
-    typewriterIntro: string;
+    identity: string;
     typewriterLabel: string;
     typewriterPhrases: string[];
-    description: string;
     projects: string;
     contact: string;
     cv: string;
@@ -152,18 +150,15 @@ export const content: Record<Locale, Content> = {
     },
     hero: {
       eyebrow: "Portfolio · Anwendungsentwicklung",
-      title: "Webentwicklung mit JavaScript, React & Next.js.",
-      typewriterIntro: "Ich arbeite an ",
+      identity: "Angehender Fachinformatiker für Anwendungsentwicklung",
       typewriterLabel:
-        "Ich arbeite an Webanwendungen, interaktiven Oberflächen, eigenen Lernprojekten und digitalen Werkzeugen.",
+        "Ich entwickle Webanwendungen, baue moderne Interfaces, arbeite mit JavaScript, React und Next.js und verbessere meine Projekte kontinuierlich.",
       typewriterPhrases: [
-        "Webanwendungen",
-        "interaktiven Oberflächen",
-        "eigenen Lernprojekten",
-        "digitalen Werkzeugen",
+        "Ich entwickle Webanwendungen.",
+        "Ich baue moderne Interfaces.",
+        "Ich arbeite mit JavaScript, React & Next.js.",
+        "Ich lerne weiter und verbessere meine Projekte.",
       ],
-      description:
-        "Ich entwickle eigene Webprojekte und suche ein Praktikum oder eine Ausbildung zum Fachinformatiker für Anwendungsentwicklung. Hier sehen Sie, woran ich arbeite und was ich bisher gelernt habe.",
       projects: "Projekte ansehen",
       contact: "Kontakt aufnehmen",
       cv: "Lebenslauf herunterladen",
@@ -239,10 +234,11 @@ export const content: Record<Locale, Content> = {
     about: {
       label: "03 / Über mich",
       title: "Mein Weg in die Anwendungsentwicklung.",
-      intro: "Ich bin Ali und lebe in Saarlouis, Deutschland.",
+      intro:
+        "Ich bin Ali und lebe in Saarlouis, Deutschland. In eigenen Webprojekten entwickle ich Oberflächen und arbeite mich in die Abläufe dahinter ein.",
       paragraphs: [
         "Mich interessiert, wie aus einer Oberfläche eine funktionierende Anwendung wird: Wie kommen Daten auf die Seite? Wie greifen Anmeldung, Benutzerrollen und Datenbank ineinander? An diesen Fragen arbeite ich in meinen Projekten.",
-        "Ich stehe am Anfang meiner beruflichen Entwicklung. In einem Praktikum oder einer Ausbildung möchte ich meine Grundlagen vertiefen und lernen, wie ein Entwicklungsteam Software plant, prüft und betreut.",
+        "Ich bereite mich auf ein Praktikum oder eine Ausbildung zum Fachinformatiker für Anwendungsentwicklung vor. Dort möchte ich meine Grundlagen vertiefen und lernen, wie ein Team Software plant, prüft und betreut.",
       ],
       currentTitle: "Aktuell",
       current: [
@@ -357,18 +353,15 @@ export const content: Record<Locale, Content> = {
     },
     hero: {
       eyebrow: "Portfolio · Application development",
-      title: "Web development with JavaScript, React & Next.js.",
-      typewriterIntro: "I work on ",
+      identity: "Aspiring Fachinformatiker for application development",
       typewriterLabel:
-        "I work on web applications, interactive interfaces, personal learning projects and useful digital tools.",
+        "I build web applications, create modern interfaces, work with JavaScript, React and Next.js, and keep improving my projects.",
       typewriterPhrases: [
-        "web applications",
-        "interactive interfaces",
-        "personal learning projects",
-        "useful digital tools",
+        "I build web applications.",
+        "I create modern interfaces.",
+        "I work with JavaScript, React & Next.js.",
+        "I keep learning and improving my projects.",
       ],
-      description:
-        "I build my own web projects and am looking for an internship or vocational training as a Fachinformatiker für Anwendungsentwicklung. Here is what I’m working on and what I’ve learned so far.",
       projects: "View projects",
       contact: "Get in touch",
       cv: "Download CV",
@@ -444,10 +437,11 @@ export const content: Record<Locale, Content> = {
     about: {
       label: "03 / About",
       title: "My path into application development.",
-      intro: "I’m Ali, based in Saarlouis, Germany.",
+      intro:
+        "I’m Ali, based in Saarlouis, Germany. Through personal web projects, I build interfaces and learn how the systems behind them work.",
       paragraphs: [
         "I’m interested in how an interface becomes a working application: how does data reach the page? How do authentication, user roles, and a database fit together? These are the questions I work through in my projects.",
-        "I’m at the start of my career. Through an internship or vocational training, I want to strengthen my foundations and learn how a development team plans, tests, and maintains software.",
+        "I’m preparing for an internship or vocational training as a Fachinformatiker für Anwendungsentwicklung. There, I want to strengthen my foundations and learn how a team plans, tests, and maintains software.",
       ],
       currentTitle: "Currently",
       current: [

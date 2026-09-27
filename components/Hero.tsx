@@ -17,13 +17,12 @@ export default function Hero({ text }: { text: Content["hero"] }) {
         <h1 id="hero-title">
           Ali Abdi<span aria-hidden="true">.</span>
         </h1>
-        <p className="hero-role">{text.title}</p>
+        <p className="hero-identity">{text.identity}</p>
         <RotatingTypewriter
-          intro={text.typewriterIntro}
+          key={text.typewriterPhrases.join("|")}
           label={text.typewriterLabel}
           phrases={text.typewriterPhrases}
         />
-        <p className="hero-description">{text.description}</p>
         <div className="hero-actions">
           <a className="button button-primary" href="#projects">
             {text.projects}
@@ -51,17 +50,16 @@ export default function Hero({ text }: { text: Content["hero"] }) {
           </a>
         </div>
       </div>
-      <figure className="hero-portrait">
+      <figure className="hero-avatar">
         <Image
-          src="/profile.webp"
+          src="/ali-avatar.png"
           alt={text.portraitAlt}
-          width={800}
-          height={800}
+          width={1024}
+          height={1536}
           preload
-          sizes="(max-width: 599px) 112px, (max-width: 900px) 240px, 300px"
-          className="portrait-image"
+          sizes="(max-width: 599px) min(76vw, 320px), (max-width: 900px) 38vw, 460px"
+          className="avatar-image"
         />
-        <figcaption>{text.availability}</figcaption>
       </figure>
       <dl className="profile-facts">
         {text.facts.map((fact) => (

@@ -32,11 +32,11 @@ test("production responses enforce browser security boundaries", async ({
   }
 });
 
-test("image processing accepts only the portrait and bounded sizes and quality", async ({
+test("image processing accepts only the avatar and bounded sizes and quality", async ({
   request,
 }) => {
   const valid = await request.get("/_next/image", {
-    params: { url: "/profile.webp", w: 300, q: 75 },
+    params: { url: "/ali-avatar.png", w: 300, q: 75 },
     headers: { Accept: "image/webp" },
   });
   expect(valid.status()).toBe(200);
@@ -45,9 +45,10 @@ test("image processing accepts only the portrait and bounded sizes and quality",
 
   for (const url of [
     "/profile.png",
+    "/profile.webp",
     "/social/de",
     "/icon.svg",
-    "/profile.webp?variant=unbounded",
+    "/ali-avatar.png?variant=unbounded",
     "https://security-test.invalid/image.webp",
     "http://127.0.0.1:3107/de",
     "//security-test.invalid/image.webp",
@@ -62,7 +63,7 @@ test("image processing accepts only the portrait and bounded sizes and quality",
     { w: 300, q: 100 },
   ]) {
     const response = await request.get("/_next/image", {
-      params: { url: "/profile.webp", ...params },
+    params: { url: "/ali-avatar.png", ...params },
     });
     expect(response.status()).toBe(400);
   }
@@ -140,7 +141,7 @@ test("normal browsing has no CSP violations or third-party resource requests", a
   await page.getByRole("link", { name: "English", exact: true }).click();
   await expect(page.locator("html")).toHaveAttribute("lang", "en");
   await page
-    .locator(".portrait-image")
+    .locator(".avatar-image")
     .evaluate((image: HTMLImageElement) => image.decode());
   expect(foreignRequests).toEqual([]);
   expect(cspErrors).toEqual([]);

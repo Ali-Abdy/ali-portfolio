@@ -23,11 +23,11 @@ An interface’s appearance cannot establish whether it was made with AI. This r
 
 ## Visual direction
 
-Navy backgrounds, royal-blue actions, restrained borders, readable secondary text, consistent spacing, and a compact personal portrait. The hero uses one local Antigravity canvas as a quiet interactive layer: it stays behind the content, respects reduced motion, and reduces particle density on touch or constrained devices. No decorative mock terminals, fabricated metrics, invented testimonials, animated cursors, or unrelated animation libraries. Preserve the existing light theme and reduced-motion support.
+Navy backgrounds, royal-blue actions, restrained borders, readable secondary text, and consistent spacing. The site uses one local CSS background layer with a quiet grid and sparse geometric elements; it stays behind content, avoids interaction handling, and becomes static for reduced motion. The hero uses the supplied transparent avatar without a visual frame. No decorative mock terminals, fabricated metrics, invented testimonials, or unrelated animation libraries. Preserve the existing light theme and reduced-motion support.
 
 ## Engineering choices
 
-- Keep content in the two typed locale files. The hero's local Three.js dependency is deferred until after first render and is omitted for reduced motion.
+- Keep content in the two typed locale files. The local typewriter is omitted for reduced motion and does not announce changing characters to assistive technologies.
 - Keep page sections server-rendered. Use client code only for navigation enhancement, theme selection, clipboard feedback, and printing.
 - Use native links and disclosures so the core content, project details, mobile navigation, and contact address work without JavaScript.
 - Keep project status explicit. Luxury Barbershop is in development and Skycast is a learning prototype.

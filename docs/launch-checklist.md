@@ -32,6 +32,6 @@ This is a deployment checklist for this specific portfolio, not legal advice. It
 - The application has no analytics, tracking cookies, marketing tags, third-party embeds, visitor database, or server-side contact form.
 - The theme preference is stored in browser local storage only after a visitor selects it.
 - Fonts are downloaded at build time by `next/font` and served from the site origin.
-- The portrait shown by the site is `public/profile.webp`; the source portrait is not a public route.
+- The avatar shown by the site is `public/ali-avatar.png`; unused source portraits are not public routes.
 
 Review [security-review.md](security-review.md) and [legal-review.md](legal-review.md) again immediately before launch.

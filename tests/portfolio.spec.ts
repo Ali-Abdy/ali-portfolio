@@ -16,7 +16,9 @@ for (const lang of ["de", "en"] as const) {
     const html = await response.text();
     expect(html).toContain(`<html lang="${lang}"`);
     expect(html).toContain(
-      lang === "de" ? "Webentwicklung mit" : "Web development with",
+      lang === "de"
+        ? "Angehender Fachinformatiker"
+        : "Aspiring Fachinformatiker",
     );
     await page.goto(`/${lang}`);
     await expect(page.locator("html")).toHaveAttribute("lang", lang);
@@ -24,8 +26,8 @@ for (const lang of ["de", "en"] as const) {
     await expect(page.locator("h1")).toHaveText("Ali Abdi.");
     await expect(page.locator(".hero-typewriter .sr-only")).toHaveText(
       lang === "de"
-        ? /Ich arbeite an Webanwendungen/
-        : /I work on web applications/,
+        ? /Ich entwickle Webanwendungen/
+        : /I build web applications/,
     );
     await expect(page.locator("article")).toHaveCount(2);
     await expect(page.locator("main > section").nth(1)).toHaveAttribute(
@@ -53,11 +55,11 @@ for (const lang of ["de", "en"] as const) {
       expect(await link.getAttribute("rel")).toContain("noreferrer");
     }
     await page
-      .locator(".portrait-image")
+      .locator(".avatar-image")
       .evaluate((image: HTMLImageElement) => image.decode());
     expect(
       await page
-        .locator(".portrait-image")
+        .locator(".avatar-image")
         .evaluate((image: HTMLImageElement) => image.naturalWidth),
     ).toBeGreaterThan(0);
     // Both disclosures are independently keyboard operable, and details remain accessible when expanded.
@@ -100,6 +102,8 @@ for (const lang of ["de", "en"] as const) {
     await expect(
       page.locator('.desktop-nav a[href="#skills"]'),
     ).toHaveAttribute("aria-current", "location");
+    await page.waitForTimeout(150);
+    await expect(page.locator(".hero-typewriter-phrase")).not.toHaveText("");
     await page
       .getByRole("link", {
         name: lang === "de" ? "English" : "Deutsch",
@@ -116,6 +120,11 @@ for (const lang of ["de", "en"] as const) {
     await expect(
       page.locator('.desktop-nav a[href="#skills"]'),
     ).toHaveAttribute("aria-current", "location");
+    await expect(page.locator(".hero-typewriter .sr-only")).toHaveText(
+      lang === "de"
+        ? /I build web applications/
+        : /Ich entwickle Webanwendungen/,
+    );
     // Project evidence links land below the sticky header and retain a usable permalink.
     await page.locator('.skill-row a[href="#skycast"]').click();
     await expect(page).toHaveURL(/#skycast$/);
@@ -138,7 +147,7 @@ for (const width of [320, 375, 390, 430, 768, 1024, 1440, 1920]) {
     for (const lang of ["de", "en"]) {
       await page.goto(`/${lang}`);
       await page
-        .locator(".portrait-image")
+        .locator(".avatar-image")
         .evaluate((image: HTMLImageElement) => image.decode());
       expect(
         await page.evaluate(
@@ -284,12 +293,19 @@ test("mobile menu closes when focus leaves or the viewport changes", async ({
   await expect(page.locator("#mobile-navigation")).toBeHidden();
 });
 
-test("Antigravity remains local, responsive, and disabled for reduced motion", async ({
+test("the local background is decorative, responsive, and reduced-motion safe", async ({
   page,
 }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto("/de");
-  await expect(page.locator(".site-antigravity canvas")).toBeVisible();
+  await expect(page.locator(".site-background")).toHaveCount(1);
+  await expect(page.locator(".background-box")).toHaveCount(5);
+  expect(
+    await page.locator(".site-background").evaluate((element) => {
+      const styles = getComputedStyle(element);
+      return styles.position === "fixed" && styles.pointerEvents === "none";
+    }),
+  ).toBe(true);
   expect(
     await page.evaluate(
       () => document.documentElement.scrollWidth <= window.innerWidth,
@@ -298,10 +314,9 @@ test("Antigravity remains local, responsive, and disabled for reduced motion", a
 
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.reload();
-  await expect(page.locator(".site-antigravity canvas")).toHaveCount(0);
   await expect(page.locator(".typewriter-cursor")).toHaveCount(0);
   await expect(page.locator(".hero-typewriter")).toContainText(
-    "Webanwendungen",
+    "Ich entwickle Webanwendungen.",
   );
 });
 
@@ -311,10 +326,26 @@ test("default route, unknown routes, metadata assets, keyboard and reduced motio
 }) => {
   await page.goto("/");
   await expect(page).toHaveURL(/\/de$/);
+  expect(
+    await page.locator(".skip-link").evaluate((element) => {
+      const styles = getComputedStyle(element);
+      return styles.opacity === "0" && element.getBoundingClientRect().bottom < 0;
+    }),
+  ).toBe(true);
   await page.keyboard.press("Tab");
   await expect(page.locator(".skip-link")).toBeFocused();
+  expect(
+    await page
+      .locator(".skip-link")
+      .evaluate((element) => getComputedStyle(element).opacity === "1"),
+  ).toBe(true);
   await page.keyboard.press("Enter");
   await expect(page.locator("main")).toBeFocused();
+  expect(
+    await page
+      .locator(".skip-link")
+      .evaluate((element) => getComputedStyle(element).opacity === "0"),
+  ).toBe(true);
   await page.emulateMedia({ reducedMotion: "reduce" });
   expect(
     await page.evaluate(
@@ -333,4 +364,21 @@ test("default route, unknown routes, metadata assets, keyboard and reduced motio
   ]) {
     expect((await request.get(route)).status(), route).toBe(200);
   }
+});
+
+test("the supplied avatar has no visual frame", async ({ page }) => {
+  await page.goto("/de");
+  await page.locator(".avatar-image").evaluate((image: HTMLImageElement) =>
+    image.decode(),
+  );
+  expect(
+    await page.locator(".avatar-image").evaluate((element) => {
+      const styles = getComputedStyle(element);
+      return (
+        styles.borderTopWidth === "0px" &&
+        styles.borderRadius === "0px" &&
+        styles.backgroundImage === "none"
+      );
+    }),
+  ).toBe(true);
 });

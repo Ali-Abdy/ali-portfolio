@@ -7,7 +7,6 @@ import Skills from "@/components/Skills";
 import Projects from "@/components/Projects";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
-import HeroAntigravity from "@/components/HeroAntigravity";
 
 export default async function Home({
   params,
@@ -19,7 +18,13 @@ export default async function Home({
   const text = content[lang];
   return (
     <div className="portfolio-page">
-      <HeroAntigravity className="site-antigravity" />
+      <div className="site-background" aria-hidden="true">
+        <span className="background-box background-box-one" />
+        <span className="background-box background-box-two" />
+        <span className="background-box background-box-three" />
+        <span className="background-box background-box-four" />
+        <span className="background-box background-box-five" />
+      </div>
       <a className="skip-link" href="#main-content">
         {text.controls.skip}
       </a>

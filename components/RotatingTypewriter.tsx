@@ -1,22 +1,52 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useReducer, useState } from "react";
 
 type RotatingTypewriterProps = {
-  intro: string;
   label: string;
   phrases: string[];
 };
 
+type Phase = "typing" | "holding" | "deleting" | "between";
+type TypewriterState = { phraseIndex: number; characterCount: number; phase: Phase };
+
+const initialState: TypewriterState = {
+  phraseIndex: 0,
+  characterCount: 0,
+  phase: "typing",
+};
+
+function nextState(state: TypewriterState, phrases: string[]): TypewriterState {
+  const phrase = phrases[state.phraseIndex] ?? "";
+
+  if (state.phase === "typing") {
+    if (state.characterCount < phrase.length)
+      return { ...state, characterCount: state.characterCount + 1 };
+    return { ...state, phase: "holding" };
+  }
+  if (state.phase === "holding") return { ...state, phase: "deleting" };
+  if (state.phase === "deleting") {
+    if (state.characterCount > 0)
+      return { ...state, characterCount: state.characterCount - 1 };
+    return { ...state, phase: "between" };
+  }
+  return {
+    phraseIndex: (state.phraseIndex + 1) % phrases.length,
+    characterCount: 0,
+    phase: "typing",
+  };
+}
+
 export default function RotatingTypewriter({
-  intro,
   label,
   phrases,
 }: RotatingTypewriterProps) {
-  const [phraseIndex, setPhraseIndex] = useState(0);
-  const [displayed, setDisplayed] = useState(phrases[0] ?? "");
-  const [isDeleting, setIsDeleting] = useState(false);
+  const [state, dispatch] = useReducer(
+    (current: TypewriterState) => nextState(current, phrases),
+    initialState,
+  );
   const [reducedMotion, setReducedMotion] = useState(false);
+  const [isDocumentVisible, setIsDocumentVisible] = useState(true);
 
   useEffect(() => {
     const query = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -28,47 +58,36 @@ export default function RotatingTypewriter({
   }, []);
 
   useEffect(() => {
-    if (reducedMotion || phrases.length === 0) return;
+    const update = () => setIsDocumentVisible(!document.hidden);
+    update();
+    document.addEventListener("visibilitychange", update);
+    return () => document.removeEventListener("visibilitychange", update);
+  }, []);
 
-    const phrase = phrases[phraseIndex] ?? "";
-    const delay = isDeleting
-      ? displayed.length === 0
-        ? 240
-        : 32
-      : displayed.length === phrase.length
-        ? 1300
-        : 58;
+  useEffect(() => {
+    if (reducedMotion || phrases.length === 0 || !isDocumentVisible) return;
 
-    const timeout = window.setTimeout(() => {
-      if (!isDeleting && displayed.length < phrase.length) {
-        setDisplayed(phrase.slice(0, displayed.length + 1));
-        return;
-      }
-
-      if (!isDeleting) {
-        setIsDeleting(true);
-        return;
-      }
-
-      if (displayed.length > 0) {
-        setDisplayed(phrase.slice(0, -1));
-        return;
-      }
-
-      setPhraseIndex((current) => (current + 1) % phrases.length);
-      setIsDeleting(false);
-    }, delay);
+    const delay =
+      state.phase === "typing"
+        ? 65
+        : state.phase === "holding"
+          ? 1500
+          : state.phase === "deleting"
+            ? 40
+            : 325;
+    const timeout = window.setTimeout(dispatch, delay);
 
     return () => window.clearTimeout(timeout);
-  }, [displayed, isDeleting, phraseIndex, phrases, reducedMotion]);
+  }, [isDocumentVisible, phrases, reducedMotion, state]);
 
-  const phrase = reducedMotion ? (phrases[0] ?? "") : displayed;
+  const phrase = reducedMotion
+    ? (phrases[0] ?? "")
+    : (phrases[state.phraseIndex] ?? "").slice(0, state.characterCount);
 
   return (
     <p className="hero-typewriter">
       <span className="sr-only">{label}</span>
       <span aria-hidden="true">
-        {intro}
         <span className="hero-typewriter-phrase">{phrase}</span>
         {!reducedMotion && <span className="typewriter-cursor">|</span>}
       </span>

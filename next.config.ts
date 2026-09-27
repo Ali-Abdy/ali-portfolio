@@ -44,8 +44,8 @@ const contentSecurityPolicy = [
 const nextConfig: NextConfig = {
   poweredByHeader: false,
   images: {
-    // Only the portrait needs optimization. Reject arbitrary local/remote URLs.
-    localPatterns: [{ pathname: "/profile.webp", search: "" }],
+    // Only the supplied local avatar needs optimization. Reject arbitrary local/remote URLs.
+    localPatterns: [{ pathname: "/ali-avatar.png", search: "" }],
     remotePatterns: [],
     deviceSizes: [480, 600, 800],
     imageSizes: [96, 112, 240, 300],

@@ -53,7 +53,7 @@ export async function GET(
           Ali Abdi.
         </div>
         <div style={{ display: "flex", fontSize: 36, maxWidth: 950 }}>
-          {text.hero.title.replace("\n", " ")}
+          {text.hero.identity}
         </div>
       </div>
       <div
