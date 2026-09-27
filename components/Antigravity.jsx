@@ -164,9 +164,12 @@ const AntigravityInner = ({
   );
 };
 
-const Antigravity = props => {
+const Antigravity = ({ active = true, ...props }) => {
   return (
-    <Canvas camera={{ position: [0, 0, 50], fov: 35 }}>
+    <Canvas
+      camera={{ position: [0, 0, 50], fov: 35 }}
+      frameloop={active ? 'always' : 'never'}
+    >
       <AntigravityInner {...props} />
     </Canvas>
   );

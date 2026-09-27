@@ -7,6 +7,7 @@ import Skills from "@/components/Skills";
 import Projects from "@/components/Projects";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
+import HeroAntigravity from "@/components/HeroAntigravity";
 
 export default async function Home({
   params,
@@ -17,7 +18,8 @@ export default async function Home({
   if (!isLocale(lang)) notFound();
   const text = content[lang];
   return (
-    <>
+    <div className="portfolio-page">
+      <HeroAntigravity className="site-antigravity" />
       <a className="skip-link" href="#main-content">
         {text.controls.skip}
       </a>
@@ -30,6 +32,6 @@ export default async function Home({
         <Contact text={text.contact} />
       </main>
       <Footer text={text.footer} lang={lang} />
-    </>
+    </div>
   );
 }

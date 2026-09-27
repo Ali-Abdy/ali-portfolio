@@ -31,6 +31,9 @@ export type Content = {
   hero: {
     eyebrow: string;
     title: string;
+    typewriterIntro: string;
+    typewriterLabel: string;
+    typewriterPhrases: string[];
     description: string;
     projects: string;
     contact: string;
@@ -150,6 +153,15 @@ export const content: Record<Locale, Content> = {
     hero: {
       eyebrow: "Portfolio · Anwendungsentwicklung",
       title: "Webentwicklung mit JavaScript, React & Next.js.",
+      typewriterIntro: "Ich arbeite an ",
+      typewriterLabel:
+        "Ich arbeite an Webanwendungen, interaktiven Oberflächen, eigenen Lernprojekten und digitalen Werkzeugen.",
+      typewriterPhrases: [
+        "Webanwendungen",
+        "interaktiven Oberflächen",
+        "eigenen Lernprojekten",
+        "digitalen Werkzeugen",
+      ],
       description:
         "Ich entwickle eigene Webprojekte und suche ein Praktikum oder eine Ausbildung zum Fachinformatiker für Anwendungsentwicklung. Hier sehen Sie, woran ich arbeite und was ich bisher gelernt habe.",
       projects: "Projekte ansehen",
@@ -346,6 +358,15 @@ export const content: Record<Locale, Content> = {
     hero: {
       eyebrow: "Portfolio · Application development",
       title: "Web development with JavaScript, React & Next.js.",
+      typewriterIntro: "I work on ",
+      typewriterLabel:
+        "I work on web applications, interactive interfaces, personal learning projects and useful digital tools.",
+      typewriterPhrases: [
+        "web applications",
+        "interactive interfaces",
+        "personal learning projects",
+        "useful digital tools",
+      ],
       description:
         "I build my own web projects and am looking for an internship or vocational training as a Fachinformatiker für Anwendungsentwicklung. Here is what I’m working on and what I’ve learned so far.",
       projects: "View projects",

@@ -20,6 +20,11 @@ export default function TopBar({
   const [active, setActive] = useState<SectionId | null>(null);
   const { resolvedTheme, setTheme } = useTheme();
   const hydrated = useHydrated();
+
+  useEffect(() => {
+    document.documentElement.classList.add("enhanced-scroll");
+  }, []);
+
   const closeMenu = () => {
     if (menu.current) menu.current.open = false;
   };

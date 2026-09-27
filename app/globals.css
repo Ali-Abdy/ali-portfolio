@@ -4,41 +4,45 @@
 
 :root {
   color-scheme: light;
-  --bg: #f9fafc;
-  --surface: #ffffff;
-  --soft: #eef2f9;
+  --bg: #f5f8fe;
+  --surface: #fbfdff;
+  --soft: #eaf1fc;
   --text: #142442;
   --muted: #53617a;
-  --line: #d2dbea;
-  --accent: #2851cd;
-  --accent-soft: #e5edff;
-  --action: #315ee8;
+  --line: #cbd8ec;
+  --accent: #1d4ed8;
+  --accent-soft: #e0ebff;
+  --action: #1d4ed8;
   --on-action: #ffffff;
 }
 .dark {
   color-scheme: dark;
-  --bg: #0b1426;
-  --surface: #101e35;
-  --soft: #101c31;
-  --text: #edf2fc;
-  --muted: #aebbd1;
-  --line: #2a3a54;
-  --accent: #9ab7ff;
-  --accent-soft: #1a2d50;
-  --action: #315ee8;
+  --bg: #07111f;
+  --surface: #0b1930;
+  --soft: #0c1a31;
+  --text: #f1f6ff;
+  --muted: #b2c0d7;
+  --line: #263a58;
+  --accent: #60a5fa;
+  --accent-soft: #10284b;
+  --action: #1d4ed8;
   --on-action: #ffffff;
 }
 * {
   box-sizing: border-box;
 }
 html {
-  scroll-behavior: smooth;
+  scroll-behavior: auto;
   scroll-padding-top: 88px;
+}
+html.enhanced-scroll {
+  scroll-behavior: smooth;
 }
 body {
   margin: 0;
   background: var(--bg);
   color: var(--text);
+  overflow-x: clip;
   -webkit-font-smoothing: antialiased;
 }
 ::selection {
@@ -47,6 +51,17 @@ body {
 }
 [hidden] {
   display: none !important;
+}
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 a {
   color: inherit;
@@ -82,11 +97,54 @@ svg {
   flex-shrink: 0;
 }
 .section-shell {
-  width: min(1120px, calc(100% - 80px));
+  width: min(1320px, calc(100% - clamp(48px, 8vw, 176px)));
   margin-inline: auto;
 }
 .section-space {
   padding-block: 80px;
+}
+.portfolio-page {
+  position: relative;
+  isolation: isolate;
+  min-height: 100dvh;
+}
+.portfolio-page::before {
+  content: "";
+  position: fixed;
+  z-index: -2;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(116deg, rgba(29, 78, 216, 0.12), transparent 37%),
+    linear-gradient(180deg, var(--bg) 0%, #09192e 51%, var(--bg) 100%);
+}
+.site-antigravity {
+  position: fixed;
+  z-index: -1;
+  inset: 0;
+  opacity: 0.2;
+  pointer-events: auto;
+}
+.site-antigravity canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+}
+.portfolio-page > :not(.site-antigravity) {
+  position: relative;
+  z-index: 0;
+}
+.portfolio-page > .site-header,
+.portfolio-page > .skip-link {
+  z-index: 50;
+}
+.dark .portfolio-page::before {
+  background:
+    linear-gradient(116deg, rgba(29, 78, 216, 0.15), transparent 37%),
+    linear-gradient(180deg, #07111f 0%, #08172a 51%, #07111f 100%);
+}
+.dark .site-antigravity {
+  opacity: 0.28;
 }
 .eyebrow {
   color: var(--accent);
@@ -160,7 +218,7 @@ svg {
   z-index: 100;
   top: 12px;
   left: 16px;
-  transform: translateY(-180%);
+  transform: translateY(calc(-100% - 24px));
   padding: 12px 20px;
   background: var(--action);
   color: #fff;
@@ -175,7 +233,7 @@ svg {
   position: sticky;
   top: 0;
   z-index: 50;
-  background: var(--bg);
+  background: color-mix(in srgb, var(--bg) 92%, transparent);
   border-bottom: 1px solid var(--line);
 }
 .navbar {
@@ -323,33 +381,12 @@ svg {
 /* Identity and the three facts a recruiter needs first. */
 .hero {
   position: relative;
-  isolation: isolate;
-  overflow: clip;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 300px;
+  grid-template-columns: minmax(0, 1fr) 320px;
   align-items: center;
-  gap: 0 80px;
-  padding-top: 64px;
-}
-.hero-antigravity {
-  position: absolute;
-  z-index: 0;
-  inset: -20% -10% -8%;
-  opacity: 0.28;
-}
-.dark .hero-antigravity {
-  opacity: 0.34;
-}
-.hero-antigravity canvas {
-  display: block;
-  width: 100% !important;
-  height: 100% !important;
-}
-.hero-copy,
-.hero-portrait,
-.profile-facts {
-  position: relative;
-  z-index: 1;
+  gap: 0 clamp(64px, 9vw, 148px);
+  padding-top: clamp(64px, 9vh, 112px);
+  padding-bottom: 24px;
 }
 .hero h1 {
   margin-top: 16px;
@@ -368,6 +405,28 @@ svg {
   margin-top: 20px;
   max-width: 590px;
   text-wrap: balance;
+}
+.hero-typewriter {
+  min-height: 1.7em;
+  margin-top: 14px;
+  color: var(--accent);
+  font-size: clamp(16px, 1.6vw, 19px);
+  font-weight: 500;
+  line-height: 1.7;
+}
+.hero-typewriter-phrase {
+  color: var(--text);
+}
+.typewriter-cursor {
+  display: inline-block;
+  width: 0.5ch;
+  color: var(--accent);
+  animation: cursor-blink 1s steps(1, end) infinite;
+}
+@keyframes cursor-blink {
+  50% {
+    opacity: 0;
+  }
 }
 .hero-description {
   font-size: 16px;
@@ -611,7 +670,7 @@ svg {
 }
 
 .skills-section {
-  background: var(--soft);
+  background: color-mix(in srgb, var(--soft) 72%, transparent);
   border-block: 1px solid var(--line);
 }
 .skills-list {
@@ -699,7 +758,7 @@ svg {
 }
 
 .contact-section {
-  background: var(--soft);
+  background: color-mix(in srgb, var(--soft) 72%, transparent);
   border-block: 1px solid var(--line);
 }
 .contact-grid {
@@ -930,12 +989,11 @@ svg {
     display: block;
     padding-top: 36px;
   }
-  .hero-antigravity {
-    inset: -12% -30% 0;
-    opacity: 0.14;
+  .site-antigravity {
+    opacity: 0.12;
   }
-  .dark .hero-antigravity {
-    opacity: 0.22;
+  .dark .site-antigravity {
+    opacity: 0.18;
   }
   .hero .eyebrow {
     max-width: calc(100% - 128px);
@@ -1141,7 +1199,8 @@ svg {
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  html {
+  html,
+  html.enhanced-scroll {
     scroll-behavior: auto;
   }
   *,

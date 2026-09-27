@@ -2,7 +2,7 @@ import Image from "next/image";
 import { profile, type Content } from "@/content/site";
 import { Icon } from "./Icons";
 import ExternalLink from "./ExternalLink";
-import HeroAntigravity from "./HeroAntigravity";
+import RotatingTypewriter from "./RotatingTypewriter";
 
 export default function Hero({ text }: { text: Content["hero"] }) {
   return (
@@ -12,13 +12,17 @@ export default function Hero({ text }: { text: Content["hero"] }) {
       aria-labelledby="hero-title"
       tabIndex={-1}
     >
-      <HeroAntigravity />
       <div className="hero-copy">
         <p className="eyebrow">{text.eyebrow}</p>
         <h1 id="hero-title">
           Ali Abdi<span aria-hidden="true">.</span>
         </h1>
         <p className="hero-role">{text.title}</p>
+        <RotatingTypewriter
+          intro={text.typewriterIntro}
+          label={text.typewriterLabel}
+          phrases={text.typewriterPhrases}
+        />
         <p className="hero-description">{text.description}</p>
         <div className="hero-actions">
           <a className="button button-primary" href="#projects">

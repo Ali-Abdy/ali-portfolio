@@ -22,6 +22,11 @@ for (const lang of ["de", "en"] as const) {
     await expect(page.locator("html")).toHaveAttribute("lang", lang);
     await expect(page).toHaveTitle(/Ali Abdi/);
     await expect(page.locator("h1")).toHaveText("Ali Abdi.");
+    await expect(page.locator(".hero-typewriter .sr-only")).toHaveText(
+      lang === "de"
+        ? /Ich arbeite an Webanwendungen/
+        : /I work on web applications/,
+    );
     await expect(page.locator("article")).toHaveCount(2);
     await expect(page.locator("main > section").nth(1)).toHaveAttribute(
       "id",
@@ -284,7 +289,7 @@ test("Antigravity remains local, responsive, and disabled for reduced motion", a
 }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto("/de");
-  await expect(page.locator(".hero-antigravity canvas")).toBeVisible();
+  await expect(page.locator(".site-antigravity canvas")).toBeVisible();
   expect(
     await page.evaluate(
       () => document.documentElement.scrollWidth <= window.innerWidth,
@@ -293,7 +298,11 @@ test("Antigravity remains local, responsive, and disabled for reduced motion", a
 
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.reload();
-  await expect(page.locator(".hero-antigravity canvas")).toHaveCount(0);
+  await expect(page.locator(".site-antigravity canvas")).toHaveCount(0);
+  await expect(page.locator(".typewriter-cursor")).toHaveCount(0);
+  await expect(page.locator(".hero-typewriter")).toContainText(
+    "Webanwendungen",
+  );
 });
 
 test("default route, unknown routes, metadata assets, keyboard and reduced motion", async ({
