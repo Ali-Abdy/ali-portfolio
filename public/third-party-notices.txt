@@ -109,6 +109,9 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 licenses/uzair-portfolio-react/MIT.txt
 ========================================================================
 
+Interactive background adapted from Portfolio-React
+Source: https://github.com/uzair0x7/Portfolio-React
+
 MIT License
 
 Copyright (c) 2026 Uzair Ali

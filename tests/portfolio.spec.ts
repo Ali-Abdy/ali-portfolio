@@ -293,18 +293,28 @@ test("mobile menu closes when focus leaves or the viewport changes", async ({
   await expect(page.locator("#mobile-navigation")).toBeHidden();
 });
 
-test("the local background is decorative, responsive, and reduced-motion safe", async ({
+test("the interactive grid background is decorative, responsive, and reduced-motion safe", async ({
   page,
 }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto("/de");
-  await expect(page.locator(".site-background")).toHaveCount(1);
-  await expect(page.locator(".background-box")).toHaveCount(5);
+  const background = page.locator(".interactive-grid-background");
+  await expect(background).toHaveCount(1);
+  await expect(background).toHaveAttribute("aria-hidden", "true");
   expect(
-    await page.locator(".site-background").evaluate((element) => {
+    await background.evaluate((element) => {
       const styles = getComputedStyle(element);
-      return styles.position === "fixed" && styles.pointerEvents === "none";
+      return (
+        styles.position === "fixed" &&
+        styles.pointerEvents === "none" &&
+        styles.zIndex === "0"
+      );
     }),
+  ).toBe(true);
+  expect(
+    await page.locator("main").evaluate((element) =>
+      getComputedStyle(element).zIndex === "1",
+    ),
   ).toBe(true);
   expect(
     await page.evaluate(
@@ -312,40 +322,39 @@ test("the local background is decorative, responsive, and reduced-motion safe", 
     ),
   ).toBe(true);
 
-  const firstBox = page.locator(".background-box-one");
-  const firstBoxBounds = await firstBox.boundingBox();
-  expect(firstBoxBounds).not.toBeNull();
-  await page.mouse.move(
-    firstBoxBounds!.x + firstBoxBounds!.width / 2,
-    firstBoxBounds!.y + firstBoxBounds!.height / 2,
+  await page.mouse.move(720, 450);
+  await expect
+    .poll(async () =>
+      background.evaluate((element) =>
+        element.style.getPropertyValue("--spotlight-opacity"),
+      ),
+    )
+    .toBe("1");
+  expect(
+    await background.evaluate((element) => ({
+      x: element.style.getPropertyValue("--mouse-x"),
+      y: element.style.getPropertyValue("--mouse-y"),
+    })),
+  ).toEqual({ x: "720px", y: "450px" });
+  await page.evaluate(() =>
+    document.documentElement.dispatchEvent(new MouseEvent("mouseleave")),
   );
   await expect
     .poll(async () =>
-      Number(
-        await firstBox.evaluate((element) =>
-          getComputedStyle(element).getPropertyValue("--background-proximity"),
-        ),
+      background.evaluate((element) =>
+        element.style.getPropertyValue("--spotlight-opacity"),
       ),
     )
-    .toBeGreaterThan(0.8);
-  await page.mouse.move(1420, 880);
-  await expect
-    .poll(async () =>
-      Number(
-        await firstBox.evaluate((element) =>
-          getComputedStyle(element).getPropertyValue("--background-proximity"),
-        ),
-      ),
-    )
-    .toBeLessThan(0.05);
+    .toBe("0");
 
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.reload();
+  const reducedMotionBackground = page.locator(".interactive-grid-background");
   await page.mouse.move(150, 150);
   await page.waitForTimeout(100);
   expect(
-    await firstBox.evaluate((element) =>
-      element.style.getPropertyValue("--background-proximity"),
+    await reducedMotionBackground.evaluate((element) =>
+      element.style.getPropertyValue("--spotlight-opacity"),
     ),
   ).toBe("");
   await expect(page.locator(".typewriter-cursor")).toHaveCount(0);

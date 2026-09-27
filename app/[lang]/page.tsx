@@ -7,7 +7,7 @@ import Skills from "@/components/Skills";
 import Projects from "@/components/Projects";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
-import InteractiveBackground from "@/components/InteractiveBackground";
+import InteractiveGridBackground from "@/components/InteractiveGridBackground";
 
 export default async function Home({
   params,
@@ -19,7 +19,7 @@ export default async function Home({
   const text = content[lang];
   return (
     <div className="portfolio-page">
-      <InteractiveBackground />
+      <InteractiveGridBackground />
       <a className="skip-link" href="#main-content">
         {text.controls.skip}
       </a>
