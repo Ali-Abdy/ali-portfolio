@@ -4,7 +4,9 @@ This is a deployment checklist for this specific portfolio, not legal advice. It
 
 ## Required before a public Vercel production deployment
 
-1. Decide whether the portfolio needs an Impressum and obtain advice if the private home address must remain private. A city-only entry is deliberately insufficient to enable the legal pages. If an approved serviceable address is available, set these **server-side production variables** in Vercel, never in Git:
+1. Choose and verify the final public origin. Set `SITE_URL` to its HTTPS origin, for example `https://aliabdi.is-a.dev`. The production build refuses a Vercel production deployment without it so canonicals, the sitemap, and share-card URLs are not guessed.
+
+2. Treat publication of the legal pages as a separate legal decision. They remain disabled and return 404 while `LEGAL_PAGES_ENABLED` is unset or false. A city-only entry is deliberately insufficient to enable them. Do not commit a private address to Git. Only after suitable legal information is available and publication is deliberately approved should these **server-side production variables** be added in Vercel:
 
    ```text
    LEGAL_PAGES_ENABLED=true
@@ -14,11 +16,9 @@ This is a deployment checklist for this specific portfolio, not legal advice. It
    LEGAL_ADDRESS_COUNTRY=...
    ```
 
-   The production build intentionally refuses to run on Vercel unless legal pages are enabled. These values become public when rendered in the Impressum and privacy notice.
+   These values become public when rendered in the Impressum and privacy notice. Their absence does not block the rest of the portfolio from building.
 
-2. Choose and verify the final public origin. Set `SITE_URL` to its HTTPS origin, for example `https://portfolio.example`. The production build refuses a Vercel production deployment without it so canonicals, the sitemap, and share-card URLs are not guessed.
-
-3. Confirm the actual Vercel account and deployment settings: host/controller roles, request-log behavior and retention criteria, sub-processors/international transfers, security settings, and whether the applicable agreement meets your requirements. Confirm the actual mailbox arrangement and retention practice too. Update the privacy copy in `content/site.ts` with only those verified facts, then set `PRIVACY_NOTICE_REVIEWED=true` in Vercel. This is an explicit release gate, not a claim of legal compliance. No Vercel Pro upgrade or purchase is assumed by this repository.
+3. Confirm the actual Vercel account and deployment settings: host/controller roles, request-log behavior and retention criteria, sub-processors/international transfers, security settings, and whether the applicable agreement meets your requirements. Confirm the actual mailbox arrangement and retention practice too. Update the privacy copy in `content/site.ts` with only those verified facts. Set `PRIVACY_NOTICE_REVIEWED=true` later only after that review is genuinely complete; it is not a production build gate. No Vercel Pro upgrade or purchase is assumed by this repository.
 
 4. The portfolio has no contact endpoint; `mailto:` sends a visitor through their own email client. Do not claim end-to-end encryption, fixed retention, an EU-only service, a signed DPA, or any other hosting/mail fact that has not been verified.
 
@@ -35,3 +35,5 @@ This is a deployment checklist for this specific portfolio, not legal advice. It
 - The avatar shown by the site is `public/ali-avatar.png`; unused source portraits are not public routes.
 
 Review [security-review.md](security-review.md) and [legal-review.md](legal-review.md) again immediately before launch.
+
+Allowing the portfolio to build while the legal pages remain disabled is an operational deployment decision, not a claim that the site is legally compliant or cleared for every use.
